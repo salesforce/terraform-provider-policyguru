@@ -24,7 +24,7 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		ReadContext: dataSourceAwsIamPolicyDocumentRead,
+		ReadContext: dataSourcePolicySentryDocumentRead,
 
 		Schema: map[string]*schema.Schema{
 			"statement": {
@@ -64,7 +64,7 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 	}
 }
 
-func dataSourceAwsIamPolicyDocumentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
   // Warning or errors can be collected in a slice type
   var diags diag.Diagnostics

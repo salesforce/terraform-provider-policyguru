@@ -2,7 +2,7 @@ package policysentry
 
 import (
 	policySentryRest "github.com/reetasingh/terraform-provider-policy-sentry/policysentry_rest"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 func Provider() *schema.Provider {
