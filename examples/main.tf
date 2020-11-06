@@ -1,10 +1,3 @@
-terraform {
-  required_providers {
-    policysentry = {
-      source = "github.com/reetasingh/terraform-provider-policy-sentry/policysentry"
-    }
-  }
-}
 
 provider "policysentry" {}
 

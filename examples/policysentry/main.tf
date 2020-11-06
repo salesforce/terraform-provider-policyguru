@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    policysentry = {
-      source = "github.com/reetasingh/terraform-provider-policy-sentry/policysentry"
-    }
-  }
-}
-
 data "policysentry_document" "example" {}
 
 # Returns policy sentry document in json
