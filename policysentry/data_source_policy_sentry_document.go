@@ -1,4 +1,4 @@
-package hashicups
+package policysentry
 
 import (
 	"encoding/json"
@@ -13,15 +13,7 @@ import (
 	  "github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
-type PolicyDocument struct {
-	Statement []struct {
-		Action   []string `json:"Action"`
-		Effect   string   `json:"Effect"`
-		Resource []string `json:"Resource"`
-		Sid      string   `json:"Sid"`
-	} `json:"Statement"`
-	Version string `json:"Version"`
-}
+
 
 
 func dataSourcePolicySentryDocument() *schema.Resource {
