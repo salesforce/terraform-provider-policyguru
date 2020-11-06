@@ -14,8 +14,6 @@ import (
 )
 
 
-
-
 func dataSourcePolicySentryDocument() *schema.Resource {
 	setOfString := &schema.Schema{
 		Type:     schema.TypeSet,
