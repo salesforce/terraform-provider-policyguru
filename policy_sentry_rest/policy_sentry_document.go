@@ -1,4 +1,4 @@
-package policysentry_rest
+package policy_sentry_rest
 
 type PolicyDocument struct {
 	Statement []struct {

@@ -1,4 +1,4 @@
-package policysentry
+package policy_sentry
 
 import (
 	"encoding/json"
