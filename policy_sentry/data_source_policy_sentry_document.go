@@ -1,16 +1,13 @@
 package policy_sentry
 
 import (
-	"encoding/json"
 	"context"
-	"net/http"
-    "bytes"
-    "io/ioutil"
     "strconv"
     "time"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	policySentryRest "github.com/reetasingh/terraform-provider-policy-sentry/policysentry_rest"
 )
 
 
@@ -66,58 +63,23 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 
 func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
+
+  client := m.(*policySentryRest.Client)
+
   // Warning or errors can be collected in a slice type
   var diags diag.Diagnostics
 
-  requestBody, err := json.Marshal(map[string] interface{} {
-    "mode": "crud",
-    "read": []string{"arn:aws:s3:::example-org-s3-access-logs"} })
-
+  policyDocumentJsonString, err := client.GetPolicyDocumentJsonString()
   if err != nil {
-    return diag.FromErr(err)
+		return nil, err
   }
 
-  r, err := http.Post("https://zeok878mvj.execute-api.us-east-1.amazonaws.com/dev/write", "application/json", bytes.NewBuffer(requestBody))
-  if err != nil {
-    return diag.FromErr(err)
-  }
-
-  if r.StatusCode != 200 {
-    bodyBytes, err := ioutil.ReadAll(r.Body)
-    if err != nil {
-        return diag.FromErr(err)
-    }
-    bodyString := string(bodyBytes)
-    diags = append(diags, diag.Diagnostic{
-        Severity: diag.Error,
-        Summary:  "got non 200",
-        Detail:   bodyString,
-    })
-    return diags
-  }
-
-  body, err := ioutil.ReadAll(r.Body)
-
-//  policy := PolicyDocument{}
-
-//  err = json.Unmarshal(body, &policy)
-//	if err != nil {
-//		return diag.FromErr(err)
-//  }
-
-
-//  b, err := json.Marshal(policy)
- //   if err != nil {
-//       return diag.FromErr(err)
- //  }
-
- if err := d.Set("json", string(body)); err != nil {
+ if err := d.Set("json", policyDocumentJsonString); err != nil {
     return diag.FromErr(err)
   }
   // always run
   d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
-  defer r.Body.Close()
 
   return diags
 }
