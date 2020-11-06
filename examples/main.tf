@@ -1,10 +1,16 @@
+terraform {
+  required_providers {
+    policysentry = {
+      source = "reetasingh/policy-sentry"
+    }
+  }
+}
 
 provider "policysentry" {}
 
-module "psl" {
-  source  = "./policysentry"
-}
+data "policysentry_document" "example" {}
 
-output "psl" {
-  value = module.psl.policysentry_document_json
+# Returns policy sentry document in json
+output "policysentry_document_json" {
+  value = data.policysentry_document.example.json
 }
