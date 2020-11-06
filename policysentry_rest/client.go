@@ -9,7 +9,6 @@ import (
 )
 
 const DefaultRestUrl string = "https://zeok878mvj.execute-api.us-east-1.amazonaws.com/dev/"
-const DefaultSyncUrl string = "https://todoist.com/api/v7"
 
 type Client struct {
 	HttpClient *http.Client
@@ -23,9 +22,9 @@ func NewClient() *Client {
 	}
 }
 
-func (c *Client) newRequest(method string, path string, requestBody []byte) (*http.Request, error) {
+func (c *Client) newRequest(path string, requestBody []byte) (*http.Request, error) {
 
-	req, err := http.NewRequest(method, fmt.Sprintf("%s/%s", DefaultRestUrl, path), bytes.NewBuffer(requestBody))
+	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", DefaultRestUrl, path), bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, err
 	}
