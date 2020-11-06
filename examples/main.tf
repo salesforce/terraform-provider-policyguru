@@ -11,9 +11,9 @@ provider "policy-sentry" {
   # Configuration options
 }
 
-data "policy-sentry_document" "example" {}
+data "policy-sentry-document" "example" {}
 
 # Returns policy sentry document in json
 output "policy-sentry_document_json" {
-  value = data.policy-sentry_document.example.json
+  value = data.policy-sentry-document.example.json
 }
