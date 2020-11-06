@@ -1,16 +1,19 @@
 terraform {
   required_providers {
-    policysentry = {
+    policy-sentry = {
       source = "reetasingh/policy-sentry"
+      version = "1.0.2"
     }
   }
 }
 
-provider "policysentry" {}
+provider "policy-sentry" {
+  # Configuration options
+}
 
-data "policysentry_document" "example" {}
+data "policy-sentry_document" "example" {}
 
 # Returns policy sentry document in json
-output "policysentry_document_json" {
-  value = data.policysentry_document.example.json
+output "policy-sentry_document_json" {
+  value = data.policy-sentry_document.example.json
 }

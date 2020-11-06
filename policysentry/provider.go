@@ -8,7 +8,7 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"policysentry_document": dataSourcePolicySentryDocument(),
+			"policy-sentry_document": dataSourcePolicySentryDocument(),
 		},
 		ResourcesMap:   map[string]*schema.Resource{},
 		ConfigureFunc: configureFunc(),
