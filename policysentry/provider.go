@@ -9,7 +9,7 @@ import (
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		DataSourcesMap: map[string]*schema.Resource{
-			"todoist_project": dataSourceTodoistProject(),
+			"policy_sentry_document": dataSourcePolicySentryDocument(),
 		},
 		ConfigureFunc: configureFunc(),
 	}
