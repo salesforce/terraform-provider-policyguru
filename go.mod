@@ -1,6 +1,6 @@
 module github.com/reetasingh/terraform-provider-policy-sentry
 
-go 1.13
+go 1.14
 
 require (
 	github.com/hashicorp/terraform v0.13.5
