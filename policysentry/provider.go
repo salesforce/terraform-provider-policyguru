@@ -1,4 +1,4 @@
-package hashicups
+package policysentry
 
 import (
 	policySentryRest "github.com/reetasingh/terraform-provider-policy-sentry/policysentry_rest"
