@@ -1,7 +1,7 @@
 package hashicups
 
 import (
-	policySentryRest "github.com/reetasingh/policysentry_rest"
+	policySentryRest "github.com/reetasingh/terraform-provider-policy-sentry/policysentry_rest"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 )
