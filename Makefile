@@ -25,3 +25,12 @@ test:
 
 testacc:
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
+
+validate-modules:
+	@echo "- Verifying that the dependencies have expected content..."
+	go mod verify
+	@echo "- Checking for any unused/missing packages in go.mod..."
+	go mod tidy
+	@echo "- Checking for unused packages in vendor..."
+	go mod vendor
+	@git diff --exit-code -- go.sum go.mod vendor/
