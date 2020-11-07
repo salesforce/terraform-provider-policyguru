@@ -15,6 +15,9 @@ install: build
 fmt:
 	@gofmt -l -w $(SRC)
 
+lint:
+	golangci-lint run
+
 test:
 	go test -i $(TEST) || exit 1
 	echo $(TEST) | \
