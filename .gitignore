@@ -47,6 +47,3 @@ override.tf.json
 terraform.rc
 
 .idea/
-go.mod
-vendor/*
-go.sum
