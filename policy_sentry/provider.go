@@ -16,6 +16,7 @@ func Provider() *schema.Provider {
 }
 
 func configureFunc() func(*schema.ResourceData) (interface{}, error) {
+
 	return func(d *schema.ResourceData) (interface{}, error) {
 		client := policySentryRest.NewClient()
 		return client, nil

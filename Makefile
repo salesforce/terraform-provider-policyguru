@@ -1,5 +1,7 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
 BINARY=terraform-provider-policy-sentry
+# go source files, ignore vendor directory
+SRC = $(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
 default: install
 
@@ -8,6 +10,9 @@ build:
 
 install: build
 	mv ${BINARY} ~/.terraform.d/plugins
+
+fmt:
+	@gofmt -l -w $(SRC)
 
 test:
 	go test -i $(TEST) || exit 1
