@@ -1,11 +1,10 @@
 package policy_sentry_rest
 
-
 import (
-    "net/http"
-    "fmt"
-    "io/ioutil"
-    "bytes"
+	"bytes"
+	"fmt"
+	"io/ioutil"
+	"net/http"
 )
 
 const DefaultRestUrl string = "https://zeok878mvj.execute-api.us-east-1.amazonaws.com/dev/"

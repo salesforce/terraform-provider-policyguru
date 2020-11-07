@@ -1,8 +1,8 @@
 package policy_sentry
 
 import (
-	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
 func Provider() *schema.Provider {
@@ -10,7 +10,7 @@ func Provider() *schema.Provider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"policy-sentry_document": dataSourcePolicySentryDocument(),
 		},
-		ResourcesMap:   map[string]*schema.Resource{},
+		ResourcesMap:  map[string]*schema.Resource{},
 		ConfigureFunc: configureFunc(),
 	}
 }
