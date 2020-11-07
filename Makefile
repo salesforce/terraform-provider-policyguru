@@ -34,3 +34,6 @@ validate-modules:
 	@echo "- Checking for unused packages in vendor..."
 	go mod vendor
 	@git diff --exit-code -- go.sum go.mod vendor/
+
+terraform-demo: install
+	cd examples && terraform init && terraform apply

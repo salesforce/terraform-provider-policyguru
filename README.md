@@ -1,17 +1,18 @@
 # terraform-provider-policy-sentry
 
-# Run locally
-```
-go mod init terraform-provider-policy-sentry
-go mod vendor
+Build the provider
+
+```shell
 make build
+```
+
+Build and install the provider.
+
+```shell
 make install
 ```
 
-# Test provider
+Run example configuration
+```shell
+make terraform-demo
 ```
-cd examples
-terraform init
-terraform apply
-```
-
