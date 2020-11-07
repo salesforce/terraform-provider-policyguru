@@ -3,20 +3,10 @@ name: continuous-integration
 on:
   push:
     branches:
-    - master
-    - release*
-    tags:
-    - v1.*
-    - v2.*
+    - main
   pull_request:
     branches:
-    - master
-    - release*
-
-env:
-  E2E_SETUP_KIND: yes
-  E2E_SETUP_KUBECTL: yes
-  SUDO: sudo
+    - main
 
 jobs:
   ci-go-lint:
