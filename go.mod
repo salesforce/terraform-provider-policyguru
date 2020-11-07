@@ -1,4 +1,4 @@
-module terraform-provider-hashicups
+module terraform-provider-policy-sentry
 
 go 1.14
 

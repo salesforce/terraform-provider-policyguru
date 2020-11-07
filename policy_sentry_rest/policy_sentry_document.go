@@ -1,9 +1,6 @@
 package policy_sentry_rest
 
 import "encoding/json"
-import "strconv"
-import "net/http"
-import "fmt"
 
 type PolicyDocument struct {
 	Statement []struct {
@@ -18,14 +15,14 @@ type PolicyDocument struct {
 const PolicyDocumentPath string = "write"
 
 func (c *Client) GetPolicyDocument() (*PolicyDocument, error) {
-	var policyDocument policyDocument
+	var policyDocument PolicyDocument
 
 	requestBody, err := json.Marshal(map[string] interface{} {
     "mode": "crud",
     "read": []string{"arn:aws:s3:::example-org-s3-access-logs"} })
 
     if err != nil {
-    return diag.FromErr(err)
+    return nil, err
     }
 
 	req, err := c.newRequest(PolicyDocumentPath, requestBody)
@@ -47,19 +44,15 @@ func (c *Client) GetPolicyDocument() (*PolicyDocument, error) {
 }
 
 func (c *Client) GetPolicyDocumentJsonString() (string, error) {
-	var policyDocument policyDocument
-	policyDocument, err := GetPolicyDocument()
+	policyDocument, err := c.GetPolicyDocument()
 
 	if err != nil {
-		return nil, err
+		return "", err
 	}
 
-	jsonDoc, err := json.Marshal(map[string] interface{} {
-	    policyDocument
-	}
-    }
+	jsonDoc, err := json.Marshal(policyDocument)
     if err != nil {
-		return nil, err
+		return "", err
 	}
 
 	jsonString := string(jsonDoc)

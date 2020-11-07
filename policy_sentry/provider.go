@@ -1,7 +1,7 @@
 package policy_sentry
 
 import (
-	policySentryRest "github.com/reetasingh/terraform-provider-policy-sentry/policysentry_rest"
+	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
