@@ -20,7 +20,48 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 			},
 			"mode": {
 			    Type:     schema.TypeString,
-			    Required: true,
+			    Required: false,
+			    Default: "crud",
+			},
+			"read" : {
+			    Type:     schema.TypeList,
+				Required: false,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"write" : {
+			    Type:     schema.TypeList,
+				Required: false,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"list" : {
+			    Type:     schema.TypeList,
+				Required: false,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"tagging" : {
+			    Type:     schema.TypeList,
+				Required: false,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"permissions-management" : {
+			    Type:     schema.TypeList,
+				Required: false,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
 			},
 		},
 	}
@@ -32,9 +73,18 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
-	var mode string = d.Get("mode").(string)
+	var mode string
+	var read []*string
+	var write []*string
 
-	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(mode)
+	if v, ok := d.GetOk("read"); ok {
+		read = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("write"); ok {
+		write = expandStringList(v.([]interface{}))
+	}
+
+	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(mode, read, write)
 	if err != nil {
 		return diag.FromErr(err)
 	}
@@ -46,4 +96,15 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags
+}
+
+func expandStringList(configured []interface{}) []*string {
+	vs := make([]*string, 0, len(configured))
+	for _, v := range configured {
+		val, ok := v.(string)
+		if ok && val != "" {
+			vs = append(vs, &val)
+		}
+	}
+	return vs
 }

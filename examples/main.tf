@@ -12,7 +12,7 @@ provider "policy-sentry" {
 }
 
 data "policy-sentry_document" "example" {
-    mode = "crud"
+    mode = "djjd"
 }
 
 # Returns policy sentry document in json

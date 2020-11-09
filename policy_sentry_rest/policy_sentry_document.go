@@ -14,12 +14,14 @@ type PolicyDocument struct {
 
 const PolicyDocumentPath string = "write"
 
-func (c *Client) GetPolicyDocument(mode string) (*PolicyDocument, error) {
+func (c *Client) GetPolicyDocument(mode string, read []*string, write []*string) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
 
 	inputBody := map[string]interface{}{
 		"mode": mode,
-		"read": []string{"arn:aws:s3:::example-org-s3-access-logs"}}
+		"read": read,
+		"write": write,
+	}
 
 	requestBody, err := json.Marshal(inputBody)
 
@@ -45,8 +47,8 @@ func (c *Client) GetPolicyDocument(mode string) (*PolicyDocument, error) {
 	return &policyDocument, nil
 }
 
-func (c *Client) GetPolicyDocumentJsonString(mode string) (string, error) {
-	policyDocument, err := c.GetPolicyDocument(mode)
+func (c *Client) GetPolicyDocumentJsonString(mode string, read []*string, write []*string) (string, error) {
+	policyDocument, err := c.GetPolicyDocument(mode, read, write)
 
 	if err != nil {
 		return "", err
