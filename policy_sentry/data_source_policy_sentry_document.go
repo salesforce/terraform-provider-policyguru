@@ -18,6 +18,10 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"mode": {
+			    Type:     schema.TypeString,
+			    Required: true,
+			},
 		},
 	}
 }
@@ -28,8 +32,9 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
+	var mode string = d.Get("mode").(string)
 
-	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString()
+	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(mode)
 	if err != nil {
 		return diag.FromErr(err)
 	}
