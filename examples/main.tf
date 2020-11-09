@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.0.8"
+      version = "1.0.9"
     }
   }
 }

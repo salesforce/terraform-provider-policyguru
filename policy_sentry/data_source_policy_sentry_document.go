@@ -18,11 +18,6 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"mode": {
-			    Type:     schema.TypeString,
-			    Required: false,
-			    Default: "crud",
-			},
 			"read" : {
 			    Type:     schema.TypeList,
 				Optional: true,
