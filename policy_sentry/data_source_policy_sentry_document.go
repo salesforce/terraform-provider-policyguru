@@ -25,7 +25,7 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 			},
 			"read" : {
 			    Type:     schema.TypeList,
-				Required: false,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type:         schema.TypeString,
 				},
@@ -33,31 +33,7 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 			},
 			"write" : {
 			    Type:     schema.TypeList,
-				Required: false,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"list" : {
-			    Type:     schema.TypeList,
-				Required: false,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"tagging" : {
-			    Type:     schema.TypeList,
-				Required: false,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"permissions-management" : {
-			    Type:     schema.TypeList,
-				Required: false,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type:         schema.TypeString,
 				},
