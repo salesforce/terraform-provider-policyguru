@@ -70,6 +70,48 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 					Type:         schema.TypeString,
 				},
 			},
+			"service_read" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"service_write" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"service_list" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"service_tagging" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"service_permissions_management" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"single_actions" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -82,6 +124,9 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	var diags diag.Diagnostics
 
 	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
+
+
+	// Read policy document input
 
 	if v, ok := d.GetOk("read"); ok {
 		policyDocumentInput.Read = expandStringList(v.([]interface{}))
@@ -103,6 +148,24 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	}
 	if v, ok := d.GetOk("skip_resource_constraints"); ok {
 		policyDocumentInput.SkipResourceConstraints = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("service_read"); ok {
+		policyDocumentInput.ServiceRead = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("service_write"); ok {
+		policyDocumentInput.ServiceWrite = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("service_list"); ok {
+		policyDocumentInput.ServiceList = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("service_tagging"); ok {
+		policyDocumentInput.ServiceTagging = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("service_permissions_management"); ok {
+		policyDocumentInput.ServicePermissionsManagement = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("single_actions"); ok {
+		policyDocumentInput.SingleActions = expandStringList(v.([]interface{}))
 	}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)

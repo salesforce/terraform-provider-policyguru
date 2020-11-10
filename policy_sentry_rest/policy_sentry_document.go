@@ -12,6 +12,12 @@ type PolicyDocumentInput struct {
 	PermissionsManagement []*string
 	ExcludeActions []*string
 	SkipResourceConstraints []*string
+	ServiceRead []*string
+	ServiceWrite []*string
+	ServiceList []*string
+	ServiceTagging []*string
+	ServicePermissionsManagement []*string
+	SingleActions []*string
 }
 
 type PolicyDocument struct {
@@ -50,6 +56,24 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	}
 	if len(input.ExcludeActions) > 0 {
 	    inputBody["exclude-actions"] = input.ExcludeActions
+	}
+	if len(input.ServiceRead) > 0 {
+	    inputBody["service-read"] = input.ServiceRead
+	}
+	if len(input.ServiceWrite) > 0 {
+	    inputBody["service-write"] = input.ServiceWrite
+	}
+	if len(input.ServiceList) > 0 {
+	    inputBody["service-list"] = input.ServiceList
+	}
+	if len(input.ServiceTagging) > 0 {
+	    inputBody["service-tagging"] = input.ServiceTagging
+	}
+	if len(input.ServicePermissionsManagement) > 0 {
+	    inputBody["service-permissions-management"] = input.ServicePermissionsManagement
+	}
+	if len(input.SingleActions) > 0 {
+	    inputBody["single-actions"] = input.SingleActions
 	}
 
 	requestBody, err := json.Marshal(inputBody)
