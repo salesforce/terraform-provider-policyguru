@@ -34,6 +34,29 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				},
 
 			},
+			"list" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"tagging" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+
+			},
+			"permissions_management" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -44,18 +67,26 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
-	var mode string
-	var read []*string
-	var write []*string
+
+	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
 
 	if v, ok := d.GetOk("read"); ok {
-		read = expandStringList(v.([]interface{}))
+		policyDocumentInput.Read = expandStringList(v.([]interface{}))
 	}
 	if v, ok := d.GetOk("write"); ok {
-		write = expandStringList(v.([]interface{}))
+		policyDocumentInput.Write = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("list"); ok {
+		policyDocumentInput.List = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("tagging"); ok {
+		policyDocumentInput.Tagging = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("permissions_management"); ok {
+		policyDocumentInput.PermissionsManagement = expandStringList(v.([]interface{}))
 	}
 
-	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(mode, read, write)
+	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
 	if err != nil {
 		return diag.FromErr(err)
 	}
