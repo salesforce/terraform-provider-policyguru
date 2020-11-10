@@ -10,12 +10,14 @@ func main() {
 	policyDocumentInput := new(abc.PolicyDocumentInput)
 
 	s := "arn:aws:s3:::mybucket"
+	exclude_actions := "s3:PutBucketPublicAccessBlock"
 
 	policyDocumentInput.Read = []*string{&s}
-	//policyDocumentInput.Write = []*string{&s}
+	policyDocumentInput.Write = []*string{&s}
 	policyDocumentInput.Tagging = []*string{&s}
 	policyDocumentInput.PermissionsManagement = []*string{&s}
 	policyDocumentInput.List = []*string{&s}
+	policyDocumentInput.ExcludeActions = []*string{&exclude_actions}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
 	if err != nil {

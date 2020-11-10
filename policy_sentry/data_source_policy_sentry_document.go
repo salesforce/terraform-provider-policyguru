@@ -56,6 +56,20 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 					Type:         schema.TypeString,
 				},
 			},
+			"exclude_actions" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
+			"skip_resource_constraints" : {
+			    Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type:         schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -83,6 +97,12 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	}
 	if v, ok := d.GetOk("list"); ok {
 		policyDocumentInput.List = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("exclude_actions"); ok {
+		policyDocumentInput.ExcludeActions = expandStringList(v.([]interface{}))
+	}
+	if v, ok := d.GetOk("skip_resource_constraints"); ok {
+		policyDocumentInput.SkipResourceConstraints = expandStringList(v.([]interface{}))
 	}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)

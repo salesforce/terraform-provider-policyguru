@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.1.3"
+      version = "1.1.4"
     }
   }
 }
@@ -13,6 +13,9 @@ provider "policy-sentry" {
 
 data "policy-sentry_document" "example" {
     read = list("arn:aws:s3:::mybucket")
+    permissions_management = list("arn:aws:s3:::mybucket")
+    list = list("arn:aws:s3:::mybucket")
+
 }
 
 # Returns policy sentry document in json

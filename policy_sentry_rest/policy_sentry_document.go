@@ -10,6 +10,8 @@ type PolicyDocumentInput struct {
 	Tagging []*string
 	List    []*string
 	PermissionsManagement []*string
+	ExcludeActions []*string
+	SkipResourceConstraints []*string
 }
 
 type PolicyDocument struct {
@@ -34,7 +36,7 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	if len(input.Write) > 0 {
 	    inputBody["write"] = input.Write
 	}
-	if len(input.Write) > 0 {
+	if len(input.Tagging) > 0 {
 	    inputBody["tagging"] = input.Tagging
 	}
 	if len(input.PermissionsManagement) > 0 {
@@ -42,6 +44,12 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	}
 	if len(input.List) > 0 {
 	    inputBody["list"] = input.List
+	}
+	if len(input.SkipResourceConstraints) > 0 {
+	    inputBody["skip-resource-constraints"] = input.SkipResourceConstraints
+	}
+	if len(input.ExcludeActions) > 0 {
+	    inputBody["exclude-actions"] = input.ExcludeActions
 	}
 
 	requestBody, err := json.Marshal(inputBody)
