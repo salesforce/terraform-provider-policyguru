@@ -34,14 +34,6 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				},
 
 			},
-			"list" : {
-			    Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
 			"tagging" : {
 			    Type:     schema.TypeList,
 				Optional: true,
@@ -75,9 +67,6 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	}
 	if v, ok := d.GetOk("write"); ok {
 		policyDocumentInput.Write = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("list"); ok {
-		policyDocumentInput.List = expandStringList(v.([]interface{}))
 	}
 	if v, ok := d.GetOk("tagging"); ok {
 		policyDocumentInput.Tagging = expandStringList(v.([]interface{}))
