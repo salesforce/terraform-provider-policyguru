@@ -28,7 +28,6 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	inputBody := map[string]interface{}{
 		"read": input.Read,
 		"write": input.Write,
-		"list": input.List,
 		"tagging": input.Tagging,
 		"permissions-management": input.PermissionsManagement,
 	}
