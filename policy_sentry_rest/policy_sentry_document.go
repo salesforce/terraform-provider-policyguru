@@ -1,6 +1,8 @@
 package policy_sentry_rest
 
-import "encoding/json"
+import (
+    "encoding/json"
+)
 
 type PolicyDocumentInput struct {
     Read   []*string
@@ -25,11 +27,23 @@ const PolicyDocumentPath string = "write"
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
 
-	inputBody := map[string]interface{}{
-		"read": input.Read,
-		"write": input.Write,
-		"tagging": input.Tagging,
-		"permissions-management": input.PermissionsManagement,
+	var inputBody map[string]interface{}
+
+	inputBody = make(map[string]interface{})
+	if len(input.Read) > 0 {
+	    inputBody["read"] = input.Read
+	}
+	if len(input.Write) > 0 {
+	    inputBody["write"] = input.Write
+	}
+	if len(input.Write) > 0 {
+	    inputBody["tagging"] = input.Tagging
+	}
+	if len(input.PermissionsManagement) > 0 {
+	    inputBody["permissions-management"] = input.PermissionsManagement
+	}
+	if len(input.List) > 0 {
+	    inputBody["list"] = input.List
 	}
 
 	requestBody, err := json.Marshal(inputBody)
