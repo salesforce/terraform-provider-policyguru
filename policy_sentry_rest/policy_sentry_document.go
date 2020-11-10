@@ -27,9 +27,7 @@ const PolicyDocumentPath string = "write"
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
 
-	var inputBody map[string]interface{}
-
-	inputBody = make(map[string]interface{})
+	var inputBody map[string]interface{} =  make(map[string]interface{})
 	if len(input.Read) > 0 {
 	    inputBody["read"] = input.Read
 	}
