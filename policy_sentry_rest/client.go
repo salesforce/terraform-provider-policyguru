@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-const DefaultRestUrl string = "https://zeok878mvj.execute-api.us-east-1.amazonaws.com/dev/"
+const DefaultRestUrl string = "https://tpzr780iv0.execute-api.us-east-1.amazonaws.com/dev/"
 
 type Client struct {
 	HttpClient *http.Client
