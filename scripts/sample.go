@@ -1,12 +1,12 @@
 package main
 
 import (
-	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 	"fmt"
+	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
 func main() {
-	client := abc.NewClient()
+	client := abc.NewClient("")
 	policyDocumentInput := new(abc.PolicyDocumentInput)
 
 	s := "arn:aws:s3:::mybucket"

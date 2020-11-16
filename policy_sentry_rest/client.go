@@ -7,23 +7,21 @@ import (
 	"net/http"
 )
 
-const DefaultRestUrl string = "https://tpzr780iv0.execute-api.us-east-1.amazonaws.com/dev/"
-
 type Client struct {
 	HttpClient *http.Client
-	Host       string
-	Base       string
+	Endpoint   string
 }
 
-func NewClient() *Client {
+func NewClient(endpoint string) *Client {
 	return &Client{
 		HttpClient: http.DefaultClient,
+		Endpoint:   endpoint,
 	}
 }
 
-func (c *Client) newRequest(path string, requestBody []byte) (*http.Request, error) {
+func (c *Client) newRequest(requestBody []byte) (*http.Request, error) {
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/%s", DefaultRestUrl, path), bytes.NewBuffer(requestBody))
+	req, err := http.NewRequest("POST", c.Endpoint, bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, err
 	}
