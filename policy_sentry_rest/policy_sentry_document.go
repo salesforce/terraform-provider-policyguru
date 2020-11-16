@@ -31,6 +31,7 @@ type PolicyDocument struct {
 }
 
 const PolicyDocumentPath string = "write"
+const DefaultRestUrl string = "https://tpzr780iv0.execute-api.us-east-1.amazonaws.com/dev/"
 
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
@@ -82,7 +83,11 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 		return nil, err
 	}
 
-	req, err := c.newRequest(PolicyDocumentPath, requestBody)
+	if len(c.Endpoint) == 0 {
+	    c.Endpoint = DefaultRestUrl + PolicyDocumentPath
+	}
+
+	req, err := c.newRequest(requestBody)
 	if err != nil {
 		return nil, err
 	}
