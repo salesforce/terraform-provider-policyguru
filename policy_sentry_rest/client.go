@@ -21,7 +21,7 @@ func NewClient(endpoint string) *Client {
 
 func (c *Client) newRequest(requestBody []byte) (*http.Request, error) {
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s", c.Endpoint), bytes.NewBuffer(requestBody))
+	req, err := http.NewRequest("POST", c.Endpoint, bytes.NewBuffer(requestBody))
 	if err != nil {
 		return nil, err
 	}
