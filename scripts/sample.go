@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	client := abc.NewClient()
+	client := abc.NewClient("")
 	policyDocumentInput := new(abc.PolicyDocumentInput)
 
 	s := "arn:aws:s3:::mybucket"
