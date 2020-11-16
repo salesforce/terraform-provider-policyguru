@@ -1,8 +1,8 @@
 package main
 
 import (
-	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 	"fmt"
+	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
 func main() {

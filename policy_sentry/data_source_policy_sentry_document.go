@@ -18,98 +18,95 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"read" : {
-			    Type:     schema.TypeList,
+			"read": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"write" : {
-			    Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"tagging" : {
-			    Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
-				},
-
-			},
-			"permissions_management" : {
-			    Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"list" : {
-			    Type:     schema.TypeList,
+			"write": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"exclude_actions" : {
-			    Type:     schema.TypeList,
+			"tagging": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"skip_resource_constraints" : {
-			    Type:     schema.TypeList,
+			"permissions_management": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"service_read" : {
-			    Type:     schema.TypeList,
+			"list": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"service_write" : {
-			    Type:     schema.TypeList,
+			"exclude_actions": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"service_list" : {
-			    Type:     schema.TypeList,
+			"skip_resource_constraints": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"service_tagging" : {
-			    Type:     schema.TypeList,
+			"service_read": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"service_permissions_management" : {
-			    Type:     schema.TypeList,
+			"service_write": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
 				},
 			},
-			"single_actions" : {
-			    Type:     schema.TypeList,
+			"service_list": {
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Schema{
-					Type:         schema.TypeString,
+					Type: schema.TypeString,
+				},
+			},
+			"service_tagging": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"service_permissions_management": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"single_actions": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
 				},
 			},
 		},
@@ -124,7 +121,6 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	var diags diag.Diagnostics
 
 	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
-
 
 	// Read policy document input
 

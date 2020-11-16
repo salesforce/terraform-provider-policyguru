@@ -1,23 +1,23 @@
 package policy_sentry_rest
 
 import (
-    "encoding/json"
+	"encoding/json"
 )
 
 type PolicyDocumentInput struct {
-    Read   []*string
-	Write   []*string
-	Tagging []*string
-	List    []*string
-	PermissionsManagement []*string
-	ExcludeActions []*string
-	SkipResourceConstraints []*string
-	ServiceRead []*string
-	ServiceWrite []*string
-	ServiceList []*string
-	ServiceTagging []*string
+	Read                         []*string
+	Write                        []*string
+	Tagging                      []*string
+	List                         []*string
+	PermissionsManagement        []*string
+	ExcludeActions               []*string
+	SkipResourceConstraints      []*string
+	ServiceRead                  []*string
+	ServiceWrite                 []*string
+	ServiceList                  []*string
+	ServiceTagging               []*string
 	ServicePermissionsManagement []*string
-	SingleActions []*string
+	SingleActions                []*string
 }
 
 type PolicyDocument struct {
@@ -36,45 +36,45 @@ const DefaultRestUrl string = "https://tpzr780iv0.execute-api.us-east-1.amazonaw
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
 
-	var inputBody map[string]interface{} =  make(map[string]interface{})
+	var inputBody map[string]interface{} = make(map[string]interface{})
 	if len(input.Read) > 0 {
-	    inputBody["read"] = input.Read
+		inputBody["read"] = input.Read
 	}
 	if len(input.Write) > 0 {
-	    inputBody["write"] = input.Write
+		inputBody["write"] = input.Write
 	}
 	if len(input.Tagging) > 0 {
-	    inputBody["tagging"] = input.Tagging
+		inputBody["tagging"] = input.Tagging
 	}
 	if len(input.PermissionsManagement) > 0 {
-	    inputBody["permissions-management"] = input.PermissionsManagement
+		inputBody["permissions-management"] = input.PermissionsManagement
 	}
 	if len(input.List) > 0 {
-	    inputBody["list"] = input.List
+		inputBody["list"] = input.List
 	}
 	if len(input.SkipResourceConstraints) > 0 {
-	    inputBody["skip-resource-constraints"] = input.SkipResourceConstraints
+		inputBody["skip-resource-constraints"] = input.SkipResourceConstraints
 	}
 	if len(input.ExcludeActions) > 0 {
-	    inputBody["exclude-actions"] = input.ExcludeActions
+		inputBody["exclude-actions"] = input.ExcludeActions
 	}
 	if len(input.ServiceRead) > 0 {
-	    inputBody["service-read"] = input.ServiceRead
+		inputBody["service-read"] = input.ServiceRead
 	}
 	if len(input.ServiceWrite) > 0 {
-	    inputBody["service-write"] = input.ServiceWrite
+		inputBody["service-write"] = input.ServiceWrite
 	}
 	if len(input.ServiceList) > 0 {
-	    inputBody["service-list"] = input.ServiceList
+		inputBody["service-list"] = input.ServiceList
 	}
 	if len(input.ServiceTagging) > 0 {
-	    inputBody["service-tagging"] = input.ServiceTagging
+		inputBody["service-tagging"] = input.ServiceTagging
 	}
 	if len(input.ServicePermissionsManagement) > 0 {
-	    inputBody["service-permissions-management"] = input.ServicePermissionsManagement
+		inputBody["service-permissions-management"] = input.ServicePermissionsManagement
 	}
 	if len(input.SingleActions) > 0 {
-	    inputBody["single-actions"] = input.SingleActions
+		inputBody["single-actions"] = input.SingleActions
 	}
 
 	requestBody, err := json.Marshal(inputBody)
@@ -84,7 +84,7 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	}
 
 	if len(c.Endpoint) == 0 {
-	    c.Endpoint = DefaultRestUrl + PolicyDocumentPath
+		c.Endpoint = DefaultRestUrl + PolicyDocumentPath
 	}
 
 	req, err := c.newRequest(requestBody)

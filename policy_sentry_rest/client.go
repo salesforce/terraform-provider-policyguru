@@ -7,16 +7,15 @@ import (
 	"net/http"
 )
 
-
 type Client struct {
 	HttpClient *http.Client
-	Endpoint       string
+	Endpoint   string
 }
 
 func NewClient(endpoint string) *Client {
 	return &Client{
 		HttpClient: http.DefaultClient,
-		Endpoint: endpoint,
+		Endpoint:   endpoint,
 	}
 }
 
