@@ -18,39 +18,47 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"read": {
-				Type:     schema.TypeList,
+			"actions_for_resources_at_access_level": {
+				Type:     schema.TypeMap,
 				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"write": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"tagging": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"permissions_management": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"list": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"read": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"write": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"tagging": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"permissions_management": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"list": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
 				},
 			},
 			"exclude_actions": {
@@ -124,19 +132,19 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	// Read policy document input
 
-	if v, ok := d.GetOk("read"); ok {
+	if v, ok := d.GetOk("actions_for_resources_at_access_level.read"); ok {
 		policyDocumentInput.Read = expandStringList(v.([]interface{}))
 	}
-	if v, ok := d.GetOk("write"); ok {
+	if v, ok := d.GetOk("actions_for_resources_at_access_level.write"); ok {
 		policyDocumentInput.Write = expandStringList(v.([]interface{}))
 	}
-	if v, ok := d.GetOk("tagging"); ok {
+	if v, ok := d.GetOk("actions_for_resources_at_access_level.tagging"); ok {
 		policyDocumentInput.Tagging = expandStringList(v.([]interface{}))
 	}
-	if v, ok := d.GetOk("permissions_management"); ok {
+	if v, ok := d.GetOk("actions_for_resources_at_access_level.permissions_management"); ok {
 		policyDocumentInput.PermissionsManagement = expandStringList(v.([]interface{}))
 	}
-	if v, ok := d.GetOk("list"); ok {
+	if v, ok := d.GetOk("actions_for_resources_at_access_level.list"); ok {
 		policyDocumentInput.List = expandStringList(v.([]interface{}))
 	}
 	if v, ok := d.GetOk("exclude_actions"); ok {
