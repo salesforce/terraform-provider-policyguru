@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.1.7"
+      version = "1.1.8"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -18,11 +18,13 @@ provider "policy-sentry" {
   endpoint = "https://rycbfaz4wl.execute-api.us-east-1.amazonaws.com/dev/write"
 }
 data "policy-sentry_document" "example" {
-    write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
-    exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
-    read = list("arn:aws:s3:::mybucket")
-    tagging = list("arn:aws:s3:::mybucket")
-    permissions_management = list("arn:aws:s3:::mybucket")
+   actions_for_resources_at_access_level {
+        write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
+        exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
+        read = list("arn:aws:s3:::mybucket")
+        tagging = list("arn:aws:s3:::mybucket")
+        permissions_management = list("arn:aws:s3:::mybucket")
+    }
 }
 # Returns policy sentry document in json
 output "policy-sentry_document_json" {
