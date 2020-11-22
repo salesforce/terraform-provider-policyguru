@@ -27,7 +27,9 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	if len(input.ActionsForResources.List) > 0 {
 		inputBody["list"] = input.ActionsForResources.List
 	}
-
+	if len(input.ActionsForResources.SingleActions) > 0 {
+		inputBody["single-actions"] = input.ActionsForResources.SingleActions
+	}
 	if len(input.ActionsForServices.Read) > 0 {
 		inputBody["service-read"] = input.ActionsForServices.Read
 	}
@@ -42,9 +44,6 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	}
 	if len(input.ActionsForServices.List) > 0 {
 		inputBody["service-list"] = input.ActionsForServices.List
-	}
-	if len(input.ActionsForServices.SingleActions) > 0 {
-		inputBody["single-actions"] = input.ActionsForServices.SingleActions
 	}
 
 	if len(input.Overrides.SkipResourceConstraints) > 0 {
