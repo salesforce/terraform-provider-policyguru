@@ -160,11 +160,11 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	}
 
 	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
-		policyDocumentInput.ActionsForResources = expandActionforResourcesAtAccessLevel(v.([]interface{}))
+		policyDocumentInput.ActionsForResources = expandActionforResourcesWithoutResourceConstraints(v.([]interface{}))
 	}
 
 	if v, ok := d.GetOk("actions_for_service_without_resource_constraint_support"); ok {
-		policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints(v.([]interface{}))
+		policyDocumentInput.ActionsForServices = expandActionforServicesAtAccessLevel(v.([]interface{}))
 	}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)

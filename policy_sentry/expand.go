@@ -4,7 +4,7 @@ import (
 	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
-func expandActionforResourcesAtAccessLevel(s []interface{}) *policySentryRest.ActionsForServicesAtAccessLevel {
+func expandActionforServicesAtAccessLevel(s []interface{}) *policySentryRest.ActionsForServicesAtAccessLevel {
 	data := s[0].(map[string]interface{})
 
 	actionForServices := new(policySentryRest.ActionsForServicesAtAccessLevel)
@@ -29,7 +29,7 @@ func expandActionforResourcesAtAccessLevel(s []interface{}) *policySentryRest.Ac
 
 }
 
-func expandActionforServiceWithoutResourceConstraints(s []interface{}) *policySentryRest.ActionsForResourcesWithoutResourceConstraints {
+func expandActionforResourcesWithoutResourceConstraints(s []interface{}) *policySentryRest.ActionsForResourcesWithoutResourceConstraints {
 	data := s[0].(map[string]interface{})
 
 	actionForResources := new(policySentryRest.ActionsForResourcesWithoutResourceConstraints)
