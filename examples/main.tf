@@ -20,11 +20,11 @@ provider "policy-sentry" {
 data "policy-sentry_document" "example" {
    actions_for_resources_at_access_level {
         write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
-        exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
         read = list("arn:aws:s3:::mybucket")
         tagging = list("arn:aws:s3:::mybucket")
         permissions_management = list("arn:aws:s3:::mybucket")
     }
+    exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
 }
 # Returns policy sentry document in json
 output "policy-sentry_document_json" {
