@@ -149,18 +149,22 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
 
+	// Read input
 
-	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
-		params.ActionsForResources = expandActionforResourcesAtAccessLevel(v.([]interface{}))
+	if v, ok := d.GetOk("overrides"); ok {
+		policyDocumentInput.Overrides = expandOverrides(v.([]interface{}))
 	}
-
-	policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints(d)
-	policyDocumentInput.Overrides = expandOverrides(d)
-
-	// Read policy document input
 
 	if v, ok := d.GetOk("exclude_actions"); ok {
 		policyDocumentInput.ExcludeActions = expandStringList(v.([]interface{}))
+	}
+
+	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
+		policyDocumentInput.ActionsForResources = expandActionforResourcesAtAccessLevel(v.([]interface{}))
+	}
+
+	if v, ok := d.GetOk("actions_for_service_without_resource_constraint_support"); ok {
+		policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints(v.([]interface{}))
 	}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
@@ -168,6 +172,7 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 		return diag.FromErr(err)
 	}
 
+	// Filed to be exported
 	if err := d.Set("json", policyDocumentJsonString); err != nil {
 		return diag.FromErr(err)
 	}

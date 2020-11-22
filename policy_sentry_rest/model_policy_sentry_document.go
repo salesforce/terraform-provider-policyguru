@@ -1,38 +1,31 @@
 package policy_sentry_rest
 
-import (
-	"encoding/json"
-)
-
-
 type PolicyDocumentInput struct {
-	ExcludeActions               []*string
-	ActionsForResources          ActionsForServicesAtAccessLevel
-	ActionsForServices           ActionsForResourcesWithoutResourceConstraints
-	Overrides                    Overrides
+	ExcludeActions      []*string
+	ActionsForResources *ActionsForServicesAtAccessLevel
+	ActionsForServices  *ActionsForResourcesWithoutResourceConstraints
+	Overrides           *Overrides
 }
 
 type ActionsForServicesAtAccessLevel struct {
-
-    Read                         []*string
-	Write                        []*string
-	Tagging                      []*string
-	List                         []*string
-	PermissionsManagement        []*string
+	Read                  []*string
+	Write                 []*string
+	Tagging               []*string
+	List                  []*string
+	PermissionsManagement []*string
 }
 
 type ActionsForResourcesWithoutResourceConstraints struct {
-
-    Read                         []*string
-	Write                        []*string
-	Tagging                      []*string
-	List                         []*string
-	PermissionsManagement        []*string
-	SingleActions                []*string
+	Read                  []*string
+	Write                 []*string
+	Tagging               []*string
+	List                  []*string
+	PermissionsManagement []*string
+	SingleActions         []*string
 }
 
 type Overrides struct {
-    SkipResourceConstraints      []*string
+	SkipResourceConstraints []*string
 }
 
 type PolicyDocument struct {

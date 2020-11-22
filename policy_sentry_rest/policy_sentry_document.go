@@ -11,44 +11,48 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	var policyDocument PolicyDocument
 
 	var inputBody map[string]interface{} = make(map[string]interface{})
-	if len(input.Read) > 0 {
-		inputBody["read"] = input.Read
+
+	if len(input.ActionsForResources.Read) > 0 {
+		inputBody["read"] = input.ActionsForResources.Read
 	}
-	if len(input.Write) > 0 {
-		inputBody["write"] = input.Write
+	if len(input.ActionsForResources.Write) > 0 {
+		inputBody["write"] = input.ActionsForResources.Write
 	}
-	if len(input.Tagging) > 0 {
-		inputBody["tagging"] = input.Tagging
+	if len(input.ActionsForResources.Tagging) > 0 {
+		inputBody["tagging"] = input.ActionsForResources.Tagging
 	}
-	if len(input.PermissionsManagement) > 0 {
-		inputBody["permissions-management"] = input.PermissionsManagement
+	if len(input.ActionsForResources.PermissionsManagement) > 0 {
+		inputBody["permissions-management"] = input.ActionsForResources.PermissionsManagement
 	}
-	if len(input.List) > 0 {
-		inputBody["list"] = input.List
+	if len(input.ActionsForResources.List) > 0 {
+		inputBody["list"] = input.ActionsForResources.List
 	}
-	if len(input.SkipResourceConstraints) > 0 {
-		inputBody["skip-resource-constraints"] = input.SkipResourceConstraints
+
+	if len(input.ActionsForServices.Read) > 0 {
+		inputBody["service-read"] = input.ActionsForServices.Read
 	}
+	if len(input.ActionsForServices.Write) > 0 {
+		inputBody["service-write"] = input.ActionsForServices.Write
+	}
+	if len(input.ActionsForServices.Tagging) > 0 {
+		inputBody["service-tagging"] = input.ActionsForServices.Tagging
+	}
+	if len(input.ActionsForServices.PermissionsManagement) > 0 {
+		inputBody["service-permissions-management"] = input.ActionsForServices.PermissionsManagement
+	}
+	if len(input.ActionsForServices.List) > 0 {
+		inputBody["service-list"] = input.ActionsForServices.List
+	}
+	if len(input.ActionsForServices.SingleActions) > 0 {
+		inputBody["single-actions"] = input.ActionsForServices.SingleActions
+	}
+
+	if len(input.Overrides.SkipResourceConstraints) > 0 {
+		inputBody["skip-resource-constraints"] = input.Overrides.SkipResourceConstraints
+	}
+
 	if len(input.ExcludeActions) > 0 {
 		inputBody["exclude-actions"] = input.ExcludeActions
-	}
-	if len(input.ServiceRead) > 0 {
-		inputBody["service-read"] = input.ServiceRead
-	}
-	if len(input.ServiceWrite) > 0 {
-		inputBody["service-write"] = input.ServiceWrite
-	}
-	if len(input.ServiceList) > 0 {
-		inputBody["service-list"] = input.ServiceList
-	}
-	if len(input.ServiceTagging) > 0 {
-		inputBody["service-tagging"] = input.ServiceTagging
-	}
-	if len(input.ServicePermissionsManagement) > 0 {
-		inputBody["service-permissions-management"] = input.ServicePermissionsManagement
-	}
-	if len(input.SingleActions) > 0 {
-		inputBody["single-actions"] = input.SingleActions
 	}
 
 	requestBody, err := json.Marshal(inputBody)

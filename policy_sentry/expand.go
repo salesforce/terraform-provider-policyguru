@@ -1,12 +1,7 @@
 package policy_sentry
 
 import (
-	"context"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"strconv"
 	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
-	"time"
 )
 
 func expandActionforResourcesAtAccessLevel(s []interface{}) *policySentryRest.ActionsForServicesAtAccessLevel {
@@ -14,10 +9,10 @@ func expandActionforResourcesAtAccessLevel(s []interface{}) *policySentryRest.Ac
 
 	actionForServices := new(policySentryRest.ActionsForServicesAtAccessLevel)
 
-	v, ok := data["read"]; ok {
+	if v, ok := data["read"]; ok {
 		actionForServices.Read = expandStringList(v.([]interface{}))
 	}
-	if v, ok :=data[write"]; ok {
+	if v, ok := data["write"]; ok {
 		actionForServices.Write = expandStringList(v.([]interface{}))
 	}
 	if v, ok := data["tagging"]; ok {
@@ -34,12 +29,12 @@ func expandActionforResourcesAtAccessLevel(s []interface{}) *policySentryRest.Ac
 
 }
 
-func expandActionforServiceWithoutResourceConstraints(d *schema.ResourceData) *policySentryRest.ActionsForResourcesWithoutResourceConstraints {
+func expandActionforServiceWithoutResourceConstraints(s []interface{}) *policySentryRest.ActionsForResourcesWithoutResourceConstraints {
 	data := s[0].(map[string]interface{})
 
 	actionForResources := new(policySentryRest.ActionsForResourcesWithoutResourceConstraints)
 
-	v, ok := data["read"]; ok {
+	if v, ok := data["read"]; ok {
 		actionForResources.Read = expandStringList(v.([]interface{}))
 	}
 	if v, ok := data["write"]; ok {
@@ -62,12 +57,12 @@ func expandActionforServiceWithoutResourceConstraints(d *schema.ResourceData) *p
 	return actionForResources
 }
 
-func expandOverrides(d *schema.ResourceData) *policySentryRest.Overrides  {
+func expandOverrides(s []interface{}) *policySentryRest.Overrides {
 	data := s[0].(map[string]interface{})
 
 	overrides := new(policySentryRest.Overrides)
 
-	v, ok := data["skip_resource_constraints_for_actions"]; ok {
+	if v, ok := data["skip_resource_constraints_for_actions"]; ok {
 		overrides.SkipResourceConstraints = expandStringList(v.([]interface{}))
 	}
 	return overrides
