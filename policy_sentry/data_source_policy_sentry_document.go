@@ -19,7 +19,7 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Computed: true,
 			},
 			"actions_for_resources_at_access_level": {
-				Type:     schema.List,
+				Type:     schema.TypeList,
 				MaxItems: 1,
 				Optional: true,
 				Elem: &schema.Resource{
