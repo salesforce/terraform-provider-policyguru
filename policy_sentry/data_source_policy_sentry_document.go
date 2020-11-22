@@ -149,9 +149,13 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
 
-	policyDocumentInput.ActionsForResources = expandActionforResourcesAtAccessLevel()
-	policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints()
-	policyDocumentInput.Overrides = expandOverrdies()
+
+	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
+		params.ActionsForResources = expandActionforResourcesAtAccessLevel(v.([]interface{}))
+	}
+
+	policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints(d)
+	policyDocumentInput.Overrides = expandOverrides(d)
 
 	// Read policy document input
 
@@ -171,52 +175,4 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags
-}
-
-
-func expandActionforResourcesAtAccessLevel(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
-	data := s[0].(map[string]interface{})
-
-	projectCache = &codebuild.ProjectCache{
-		Type: aws.String(data["type"].(string)),
-	}
-
-	if v, ok := data["location"]; ok {
-		projectCache.Location = aws.String(v.(string))
-	}
-}
-
-func expandActionforServiceWithoutResourceConstraints(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
-	data := s[0].(map[string]interface{})
-
-	projectCache = &codebuild.ProjectCache{
-		Type: aws.String(data["type"].(string)),
-	}
-
-	if v, ok := data["location"]; ok {
-		projectCache.Location = aws.String(v.(string))
-	}
-}
-
-func expandOverrides(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
-	data := s[0].(map[string]interface{})
-
-	projectCache = &codebuild.ProjectCache{
-		Type: aws.String(data["type"].(string)),
-	}
-
-	if v, ok := data["location"]; ok {
-		projectCache.Location = aws.String(v.(string))
-	}
-}
-
-func expandStringList(configured []interface{}) []*string {
-	vs := make([]*string, 0, len(configured))
-	for _, v := range configured {
-		val, ok := v.(string)
-		if ok && val != "" {
-			vs = append(vs, &val)
-		}
-	}
-	return vs
 }

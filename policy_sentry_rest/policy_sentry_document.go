@@ -4,32 +4,6 @@ import (
 	"encoding/json"
 )
 
-type PolicyDocumentInput struct {
-	Read                         []*string
-	Write                        []*string
-	Tagging                      []*string
-	List                         []*string
-	PermissionsManagement        []*string
-	ExcludeActions               []*string
-	SkipResourceConstraints      []*string
-	ServiceRead                  []*string
-	ServiceWrite                 []*string
-	ServiceList                  []*string
-	ServiceTagging               []*string
-	ServicePermissionsManagement []*string
-	SingleActions                []*string
-}
-
-type PolicyDocument struct {
-	Statement []struct {
-		Action   []string `json:"Action"`
-		Effect   string   `json:"Effect"`
-		Resource []string `json:"Resource"`
-		Sid      string   `json:"Sid"`
-	} `json:"Statement"`
-	Version string `json:"Version"`
-}
-
 const PolicyDocumentPath string = "write"
 const DefaultRestUrl string = "https://tpzr780iv0.execute-api.us-east-1.amazonaws.com/dev/"
 
