@@ -10,7 +10,7 @@ func main() {
 	client := abc.NewClient("")
 	policyDocumentInput := new(abc.PolicyDocumentInput)
 
-	//s := "arn:aws:s3:::mybucket"
+	s := "arn:aws:s3:::mybucket"
 	exclude_actions := "s3:PutBucketPublicAccessBlock"
 
 	//policyDocumentInput.Read = []*string{&s}
@@ -28,8 +28,12 @@ func main() {
 	policyDocumentInput.ActionsForResources = actionForResources
 	policyDocumentInput.Overrides = overrides
 
+	policyDocumentInput.ActionsForServices.Read = []*string{&s}
 
 	fmt.Print(policyDocumentInput.ActionsForServices)
+	fmt.Print(policyDocumentInput.ActionsForResources)
+	fmt.Print(policyDocumentInput.Overrides)
+	fmt.Print(policyDocumentInput.ExcludeActions)
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
 	if err != nil {
