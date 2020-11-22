@@ -1,5 +1,6 @@
 package main
 
+/*
 import (
 	"fmt"
 	abc "terraform-provider-policy-sentry/policy_sentry_rest"
@@ -26,3 +27,4 @@ func main() {
 
 	fmt.Print(policyDocumentJsonString)
 }
+*/
