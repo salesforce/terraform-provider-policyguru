@@ -18,6 +18,29 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"exclude_actions": {
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"overrides": {
+				Type:     schema.TypeList,
+				MaxItems: 1,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"skip_resource_constraints_for_actions": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
+				},
+			},
 			"actions_for_resources_at_access_level": {
 				Type:     schema.TypeList,
 				MaxItems: 1,
@@ -62,60 +85,55 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 					},
 				},
 			},
-			"exclude_actions": {
+			"actions_for_service_without_resource_constraint_support": {
 				Type:     schema.TypeList,
+				MaxItems: 1,
 				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"skip_resource_constraints": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"service_read": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"service_write": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"service_list": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"service_tagging": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"service_permissions_management": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
-				},
-			},
-			"single_actions": {
-				Type:     schema.TypeList,
-				Optional: true,
-				Elem: &schema.Schema{
-					Type: schema.TypeString,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"read": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"write": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"tagging": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"permissions_management": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"list": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+						"include_single_actions": {
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Schema{
+								Type: schema.TypeString,
+							},
+						},
+					},
 				},
 			},
 		},
@@ -131,46 +149,14 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
 
+	policyDocumentInput.ActionsForResources = expandActionforResourcesAtAccessLevel()
+	policyDocumentInput.ActionsForServices = expandActionforServiceWithoutResourceConstraints()
+	policyDocumentInput.Overrides = expandOverrdies()
+
 	// Read policy document input
 
-	if v, ok := d.GetOk("actions_for_resources_at_access_level.read"); ok {
-		policyDocumentInput.Read = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("actions_for_resources_at_access_level.write"); ok {
-		policyDocumentInput.Write = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("actions_for_resources_at_access_level.tagging"); ok {
-		policyDocumentInput.Tagging = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("actions_for_resources_at_access_level.permissions_management"); ok {
-		policyDocumentInput.PermissionsManagement = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("actions_for_resources_at_access_level.list"); ok {
-		policyDocumentInput.List = expandStringList(v.([]interface{}))
-	}
 	if v, ok := d.GetOk("exclude_actions"); ok {
 		policyDocumentInput.ExcludeActions = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("skip_resource_constraints"); ok {
-		policyDocumentInput.SkipResourceConstraints = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("service_read"); ok {
-		policyDocumentInput.ServiceRead = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("service_write"); ok {
-		policyDocumentInput.ServiceWrite = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("service_list"); ok {
-		policyDocumentInput.ServiceList = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("service_tagging"); ok {
-		policyDocumentInput.ServiceTagging = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("service_permissions_management"); ok {
-		policyDocumentInput.ServicePermissionsManagement = expandStringList(v.([]interface{}))
-	}
-	if v, ok := d.GetOk("single_actions"); ok {
-		policyDocumentInput.SingleActions = expandStringList(v.([]interface{}))
 	}
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
@@ -185,6 +171,43 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
 	return diags
+}
+
+
+func expandActionforResourcesAtAccessLevel(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
+	data := s[0].(map[string]interface{})
+
+	projectCache = &codebuild.ProjectCache{
+		Type: aws.String(data["type"].(string)),
+	}
+
+	if v, ok := data["location"]; ok {
+		projectCache.Location = aws.String(v.(string))
+	}
+}
+
+func expandActionforServiceWithoutResourceConstraints(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
+	data := s[0].(map[string]interface{})
+
+	projectCache = &codebuild.ProjectCache{
+		Type: aws.String(data["type"].(string)),
+	}
+
+	if v, ok := data["location"]; ok {
+		projectCache.Location = aws.String(v.(string))
+	}
+}
+
+func expandOverrides(d *schema.ResourceData) []*codebuild.ProjectArtifacts {
+	data := s[0].(map[string]interface{})
+
+	projectCache = &codebuild.ProjectCache{
+		Type: aws.String(data["type"].(string)),
+	}
+
+	if v, ok := data["location"]; ok {
+		projectCache.Location = aws.String(v.(string))
+	}
 }
 
 func expandStringList(configured []interface{}) []*string {
