@@ -1,6 +1,6 @@
 package policy_sentry_rest
 
-type ActionsForServicesAtAccessLevel struct {
+type ActionsForResourcesAtAccessLevel struct {
 	Read                  []*string
 	Write                 []*string
 	Tagging               []*string
@@ -8,7 +8,7 @@ type ActionsForServicesAtAccessLevel struct {
 	PermissionsManagement []*string
 }
 
-type ActionsForResourcesWithoutResourceConstraints struct {
+type ActionsForServicesWithoutResourceConstraints struct {
 	Read                  []*string
 	Write                 []*string
 	Tagging               []*string
@@ -19,8 +19,8 @@ type ActionsForResourcesWithoutResourceConstraints struct {
 
 type PolicyDocumentInput struct {
 	ExcludeActions      []*string
-	ActionsForResources *ActionsForResourcesWithoutResourceConstraints
-	ActionsForServices  *ActionsForServicesAtAccessLevel
+	ActionsForResources *ActionsForResourcesAtAccessLevel
+	ActionsForServices  *ActionsForServicesWithoutResourceConstraints
 	Overrides           *Overrides
 }
 

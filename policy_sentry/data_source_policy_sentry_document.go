@@ -152,7 +152,7 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 	// Read input
 
 	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
-		actionsForResources, err := expandActionforResourcesWithoutResourceConstraints(v.([]interface{}))
+		actionsForResources, err := expandActionForResourcesAtAccessLevel(v.([]interface{}))
 		if err != nil {
 			return diag.FromErr(err)
 		}
@@ -174,7 +174,7 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	/*
 		if v, ok := d.GetOk("actions_for_service_without_resource_constraint_support"); ok {
-			policyDocumentInput.ActionsForServices = expandActionforServicesAtAccessLevel(v.([]interface{}))
+			policyDocumentInput.ActionsForServices = expandActionForServicesWithoutResourceConstraints(v.([]interface{}))
 		}
 	*/
 

@@ -5,6 +5,7 @@ import (
 	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
+/*
 func main() {
 	client := abc.NewClient("")
 	policyDocumentInput := new(abc.PolicyDocumentInput)
@@ -41,3 +42,4 @@ func main() {
 
 	fmt.Print(policyDocumentJsonString)
 }
+*/
