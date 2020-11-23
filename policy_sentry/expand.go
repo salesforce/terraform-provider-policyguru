@@ -1,8 +1,8 @@
 package policy_sentry
 
 import (
-	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 	"fmt"
+	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
 func expandActionforServicesAtAccessLevel(s []interface{}) *policySentryRest.ActionsForServicesAtAccessLevel {
@@ -32,7 +32,7 @@ func expandActionforServicesAtAccessLevel(s []interface{}) *policySentryRest.Act
 
 func expandActionforResourcesWithoutResourceConstraints(s []interface{}) (*policySentryRest.ActionsForResourcesWithoutResourceConstraints, error) {
 
-    if len(s) == 0 || s[0] == nil {
+	if len(s) == 0 || s[0] == nil {
 		return nil, fmt.Errorf("got empty list")
 	}
 
@@ -43,7 +43,7 @@ func expandActionforResourcesWithoutResourceConstraints(s []interface{}) (*polic
 	v, ok := data["read"]
 
 	if !ok {
-	    return nil, fmt.Errorf("no read found")
+		return nil, fmt.Errorf("no read found")
 	}
 	actionForResources.Read = expandStringList(v.([]interface{}))
 
