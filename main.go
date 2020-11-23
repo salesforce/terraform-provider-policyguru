@@ -1,15 +1,45 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
-	"terraform-provider-policy-sentry/policy_sentry"
+	"fmt"
+	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
+
 func main() {
-	plugin.Serve(&plugin.ServeOpts{
-		ProviderFunc: func() *schema.Provider {
-			return policy_sentry.Provider()
-		},
-	})
+	client := abc.NewClient("")
+	policyDocumentInput := new(abc.PolicyDocumentInput)
+
+	s := "arn:aws:s3:::mybucket"
+	exclude_actions := "s3:PutBucketPublicAccessBlock"
+
+	//policyDocumentInput.Read = []*string{&s}
+	//policyDocumentInput.Write = []*string{&s}
+	//policyDocumentInput.Tagging = []*string{&s}
+	//policyDocumentInput.PermissionsManagement = []*string{&s}
+	//policyDocumentInput.List = []*string{&s}
+	policyDocumentInput.ExcludeActions = []*string{&exclude_actions}
+
+	actionForServices := new(abc.ActionsForServicesWithoutResourceConstraints)
+	actionForResources := new(abc.ActionsForResourcesAtAccessLevel)
+	overrides := new(abc.Overrides)
+
+	policyDocumentInput.ActionsForServices = actionForServices
+	policyDocumentInput.ActionsForResources = actionForResources
+	policyDocumentInput.Overrides = overrides
+
+	policyDocumentInput.ActionsForResources.Read = []*string{&s}
+
+	fmt.Print(policyDocumentInput.ActionsForServices)
+	fmt.Print(policyDocumentInput.ActionsForResources)
+	fmt.Print(policyDocumentInput.Overrides)
+	fmt.Print(policyDocumentInput.ExcludeActions)
+
+	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	fmt.Print(policyDocumentJsonString)
 }
+

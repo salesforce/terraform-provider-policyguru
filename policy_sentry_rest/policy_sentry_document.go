@@ -15,13 +15,13 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 
 	if input.ActionsForServices != nil {
 		if input.ActionsForServices.Read != nil && len(input.ActionsForServices.Read) > 0 {
-			inputBody["read"] = input.ActionsForServices.Read
+			inputBody["reservice-readad"] = input.ActionsForServices.Read
 		}
 		if input.ActionsForServices.Write != nil && len(input.ActionsForServices.Write) > 0 {
-			inputBody["write"] = input.ActionsForServices.Write
+			inputBody["service-write"] = input.ActionsForServices.Write
 		}
 		if input.ActionsForServices.Tagging != nil && len(input.ActionsForServices.Tagging) > 0 {
-			inputBody["tagging"] = input.ActionsForServices.Tagging
+			inputBody["service-tagging"] = input.ActionsForServices.Tagging
 		}
 		if input.ActionsForServices.PermissionsManagement != nil && len(input.ActionsForServices.PermissionsManagement) > 0 {
 			inputBody["permissions-management"] = input.ActionsForServices.PermissionsManagement
@@ -29,31 +29,31 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 		if input.ActionsForServices.List != nil && len(input.ActionsForServices.List) > 0 {
 			inputBody["list"] = input.ActionsForServices.List
 		}
-		if len(input.ActionsForServices.SingleActions) > 0 {
+		if input.ActionsForServices.SingleActions != nil && len(input.ActionsForServices.SingleActions) > 0 {
 			inputBody["single-actions"] = input.ActionsForServices.SingleActions
 		}
 	}
 
 	if input.ActionsForResources != nil {
-		if len(input.ActionsForResources.Read) > 0 {
-			inputBody["service-read"] = input.ActionsForResources.Read
+		if input.ActionsForResources.Read != nil && len(input.ActionsForResources.Read) > 0 {
+			inputBody["read"] = input.ActionsForResources.Read
 		}
-		if len(input.ActionsForResources.Write) > 0 {
-			inputBody["service-write"] = input.ActionsForResources.Write
+		if input.ActionsForResources.Write != nil && len(input.ActionsForResources.Write) > 0 {
+			inputBody["write"] = input.ActionsForResources.Write
 		}
-		if len(input.ActionsForResources.Tagging) > 0 {
-			inputBody["service-tagging"] = input.ActionsForResources.Tagging
+		if input.ActionsForResources.Tagging != nil && len(input.ActionsForResources.Tagging) > 0 {
+			inputBody["tagging"] = input.ActionsForResources.Tagging
 		}
-		if len(input.ActionsForResources.PermissionsManagement) > 0 {
-			inputBody["service-permissions-management"] = input.ActionsForResources.PermissionsManagement
+		if input.ActionsForResources.PermissionsManagement != nil && len(input.ActionsForResources.PermissionsManagement) > 0 {
+			inputBody["permissions-management"] = input.ActionsForResources.PermissionsManagement
 		}
-		if len(input.ActionsForResources.List) > 0 {
-			inputBody["service-list"] = input.ActionsForResources.List
+		if input.ActionsForResources.List != nil && len(input.ActionsForResources.List) > 0 {
+			inputBody["list"] = input.ActionsForResources.List
 		}
 	}
 
 	if input.Overrides != nil {
-		if len(input.Overrides.SkipResourceConstraints) > 0 {
+		if input.Overrides.SkipResourceConstraints != nil && len(input.Overrides.SkipResourceConstraints) > 0 {
 			inputBody["skip-resource-constraints"] = input.Overrides.SkipResourceConstraints
 		}
 	}

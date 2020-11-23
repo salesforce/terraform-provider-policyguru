@@ -5,7 +5,7 @@ import (
 	abc "terraform-provider-policy-sentry/policy_sentry_rest"
 )
 
-/*
+
 func main() {
 	client := abc.NewClient("")
 	policyDocumentInput := new(abc.PolicyDocumentInput)
@@ -20,8 +20,8 @@ func main() {
 	//policyDocumentInput.List = []*string{&s}
 	policyDocumentInput.ExcludeActions = []*string{&exclude_actions}
 
-	actionForServices := new(abc.ActionsForServicesAtAccessLevel)
-	actionForResources := new(abc.ActionsForResourcesWithoutResourceConstraints)
+	actionForServices := new(abc.ActionsForServicesWithoutResourceConstraints)
+	actionForResources := new(abc.ActionsForResourcesAtAccessLevel)
 	overrides := new(abc.Overrides)
 
 	policyDocumentInput.ActionsForServices = actionForServices
@@ -42,4 +42,4 @@ func main() {
 
 	fmt.Print(policyDocumentJsonString)
 }
-*/
+
