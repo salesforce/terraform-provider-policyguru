@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.2.6"
+      version = "1.2.7"
     }
     aws = {
       source  = "hashicorp/aws"

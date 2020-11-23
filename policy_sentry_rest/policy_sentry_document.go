@@ -29,12 +29,12 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 		if input.ActionsForServices.List != nil && len(input.ActionsForServices.List) > 0 {
 			inputBody["list"] = input.ActionsForServices.List
 		}
+		if len(input.ActionsForServices.SingleActions) > 0 {
+			inputBody["single-actions"] = input.ActionsForServices.SingleActions
+		}
 	}
 
 	if input.ActionsForResources != nil {
-		if len(input.ActionsForResources.SingleActions) > 0 {
-			inputBody["single-actions"] = input.ActionsForResources.SingleActions
-		}
 		if len(input.ActionsForResources.Read) > 0 {
 			inputBody["service-read"] = input.ActionsForResources.Read
 		}
