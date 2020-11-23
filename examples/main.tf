@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.2.8"
+      version = "1.2.9"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -20,30 +20,17 @@ provider "policy-sentry" {
 data "policy-sentry_document" "example" {
   actions_for_resources_at_access_level {
     write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
-    read = list("arn:aws:s3:::mybucket")
-    tagging = list("arn:aws:s3:::mybucket")
-    permissions_management = list("arn:aws:s3:::mybucket")
   }
 
-  actions_for_service_without_resource_constraint_support {
-    write = list("s3")
-    list = list("s3")
-    read = ["s3"]
-    include_single_actions = ["ssm:GetParameter"]
-  }
+  exclude_actions = list("kms:Delete*", "kms:Disable*", "kms:Schedule*")
 
-  overrides {
-    skip_resource_constraints_for_actions = []
-  }
-
-  exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
 }
 # Returns policy sentry document in json
 output "policy-sentry_document_json" {
   value = data.policy-sentry_document.example.json
 }
 resource "aws_iam_policy" "policy" {
-  name        = "sample"
+  name        = "sample2"
   path        = "/"
   description = "this uses policy sentry document"
   policy      = data.policy-sentry_document.example.json

@@ -15,7 +15,7 @@ func expandActionForResourcesAtAccessLevel(s []interface{}) (*policySentryRest.A
 
 	actionForResources := new(policySentryRest.ActionsForResourcesAtAccessLevel)
 
-	if v, ok := data["write"]; ok {
+	if v, ok := data["read"]; ok {
 		actionForResources.Read = expandStringList(v.([]interface{}))
 	}
 	if v, ok := data["write"]; ok {
@@ -68,15 +68,18 @@ func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policy
 	return actionForServices, nil
 }
 
-func expandOverrides(s []interface{}) *policySentryRest.Overrides {
+func expandOverrides(s []interface{}) (*policySentryRest.Overrides, error) {
+
+	if len(s) == 0 || s[0] == nil {
+		return nil, fmt.Errorf("got empty list")
+	}
+
 	data := s[0].(map[string]interface{})
-
 	overrides := new(policySentryRest.Overrides)
-
 	if v, ok := data["skip_resource_constraints_for_actions"]; ok {
 		overrides.SkipResourceConstraints = expandStringList(v.([]interface{}))
 	}
-	return overrides
+	return overrides, nil
 }
 
 func expandStringList(configured []interface{}) []*string {
