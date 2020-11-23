@@ -2,6 +2,7 @@ package policy_sentry
 
 import (
 	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
+	"fmt"
 )
 
 func expandActionforServicesAtAccessLevel(s []interface{}) *policySentryRest.ActionsForServicesAtAccessLevel {
@@ -29,14 +30,23 @@ func expandActionforServicesAtAccessLevel(s []interface{}) *policySentryRest.Act
 
 }
 
-func expandActionforResourcesWithoutResourceConstraints(s []interface{}) *policySentryRest.ActionsForResourcesWithoutResourceConstraints {
+func expandActionforResourcesWithoutResourceConstraints(s []interface{}) (*policySentryRest.ActionsForResourcesWithoutResourceConstraints, error) {
+
+    if len(s) == 0 || s[0] == nil {
+		return nil, fmt.Errorf("got empty list")
+	}
+
 	data := s[0].(map[string]interface{})
 
 	actionForResources := new(policySentryRest.ActionsForResourcesWithoutResourceConstraints)
 
-	if v, ok := data["read"]; ok {
-		actionForResources.Read = expandStringList(v.([]interface{}))
+	v, ok := data["read"]
+
+	if !ok {
+	    return nil, fmt.Errorf("no read found")
 	}
+	actionForResources.Read = expandStringList(v.([]interface{}))
+
 	if v, ok := data["write"]; ok {
 		actionForResources.Write = expandStringList(v.([]interface{}))
 	}
@@ -54,7 +64,7 @@ func expandActionforResourcesWithoutResourceConstraints(s []interface{}) *policy
 		actionForResources.SingleActions = expandStringList(v.([]interface{}))
 	}
 
-	return actionForResources
+	return actionForResources, nil
 }
 
 func expandOverrides(s []interface{}) *policySentryRest.Overrides {

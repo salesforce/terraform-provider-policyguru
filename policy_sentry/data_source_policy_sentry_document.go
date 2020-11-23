@@ -151,21 +151,32 @@ func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceD
 
 	// Read input
 
+	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
+		actionsForResources, err := expandActionforResourcesWithoutResourceConstraints(v.([]interface{}))
+		if err !=nil {
+		    return diag.FromErr(err)
+		}
+		policyDocumentInput.ActionsForResources = actionsForResources
+
+	}
+
+    /*
 	if v, ok := d.GetOk("overrides"); ok {
 		policyDocumentInput.Overrides = expandOverrides(v.([]interface{}))
 	}
+	*/
 
+    /*
 	if v, ok := d.GetOk("exclude_actions"); ok {
 		policyDocumentInput.ExcludeActions = expandStringList(v.([]interface{}))
 	}
+	*/
 
-	if v, ok := d.GetOk("actions_for_resources_at_access_level"); ok {
-		policyDocumentInput.ActionsForResources = expandActionforResourcesWithoutResourceConstraints(v.([]interface{}))
-	}
-
+    /*
 	if v, ok := d.GetOk("actions_for_service_without_resource_constraint_support"); ok {
 		policyDocumentInput.ActionsForServices = expandActionforServicesAtAccessLevel(v.([]interface{}))
 	}
+	*/
 
 	policyDocumentJsonString, err := client.GetPolicyDocumentJsonString(policyDocumentInput)
 	if err != nil {
