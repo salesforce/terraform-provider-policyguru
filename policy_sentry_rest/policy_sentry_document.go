@@ -15,7 +15,7 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 
 	if input.ActionsForServices != nil {
 		if input.ActionsForServices.Read != nil && len(input.ActionsForServices.Read) > 0 {
-			inputBody["reservice-readad"] = input.ActionsForServices.Read
+			inputBody["service-read"] = input.ActionsForServices.Read
 		}
 		if input.ActionsForServices.Write != nil && len(input.ActionsForServices.Write) > 0 {
 			inputBody["service-write"] = input.ActionsForServices.Write
@@ -24,10 +24,10 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 			inputBody["service-tagging"] = input.ActionsForServices.Tagging
 		}
 		if input.ActionsForServices.PermissionsManagement != nil && len(input.ActionsForServices.PermissionsManagement) > 0 {
-			inputBody["permissions-management"] = input.ActionsForServices.PermissionsManagement
+			inputBody["service-permissions-management"] = input.ActionsForServices.PermissionsManagement
 		}
 		if input.ActionsForServices.List != nil && len(input.ActionsForServices.List) > 0 {
-			inputBody["list"] = input.ActionsForServices.List
+			inputBody["service-list"] = input.ActionsForServices.List
 		}
 		if input.ActionsForServices.SingleActions != nil && len(input.ActionsForServices.SingleActions) > 0 {
 			inputBody["single-actions"] = input.ActionsForServices.SingleActions
