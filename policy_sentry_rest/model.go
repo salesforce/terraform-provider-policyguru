@@ -1,6 +1,5 @@
 package policy_sentry_rest
 
-
 type ActionsForServicesAtAccessLevel struct {
 	Read                  []*string
 	Write                 []*string
