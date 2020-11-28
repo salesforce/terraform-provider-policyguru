@@ -73,7 +73,7 @@ The following arguments are supported:
 * `tagging` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `TAGGING` access level and (2) do not support resource constraints.
 * `list` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `LIST` access level and (2) do not support resource constraints.
 * `permissions_management` (Optional) - Provide a List pf service prefix to generate a list of AWS service actions that (1) are at the `PERMISSIONS MANAGEMENT` access level and (2) do not support resource constraints.
-* `single-actions` (Optional) - Provide a List of individual actions that do not support resource constraints. For example, s3:ListAllMyBuckets
+* `include_single_actions` (Optional) - Provide a List of individual actions that do not support resource constraints. For example, s3:ListAllMyBuckets
 
 ## Attributes Reference
 
