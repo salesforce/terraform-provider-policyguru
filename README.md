@@ -1,18 +1,11 @@
 # terraform-provider-policy-sentry
 
-Build the provider
 
-```shell
-make build
-```
+Command             |      Description
+--------------------| --------------------
+```make build ```         | Build
+```make install  ```      | Build and install
+```make terraform-demo ```| Install and run terraform apply for file under examples folder
+```make fmt```            | Format code
+```make lint```           | Run golint
 
-Build and install the provider.
-
-```shell
-make install
-```
-
-Run example configuration
-```shell
-make terraform-demo
-```

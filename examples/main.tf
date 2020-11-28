@@ -2,7 +2,7 @@ terraform {
   required_providers {
     policy-sentry = {
       source = "reetasingh/policy-sentry"
-      version = "1.2.9"
+      version = "1.3.1"
     }
     aws = {
       source  = "hashicorp/aws"
@@ -18,10 +18,12 @@ provider "policy-sentry" {
   endpoint = "https://rycbfaz4wl.execute-api.us-east-1.amazonaws.com/dev/write"
 }
 data "policy-sentry_document" "example" {
-  actions_for_resources_at_access_level {
-    write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
+    actions_for_service_without_resource_constraint_support {
+        write = list("s3")
+        list = list("s3")
+        read = ["s3"]
+        include_single_actions = ["ssm:GetParameter"]
   }
-
   exclude_actions = list("kms:Delete*", "kms:Disable*", "kms:Schedule*")
 
 }
