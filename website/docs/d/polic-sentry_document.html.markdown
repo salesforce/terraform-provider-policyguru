@@ -39,10 +39,6 @@ data "policy-sentry_document" "example" {
   exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
 }
 
-# Returns policy sentry document in json
-output "policy-sentry_document_json" {
-  value = data.policy-sentry_document.example.json
-}
 resource "aws_iam_policy" "policy" {
   name        = "sample"
   path        = "/"
@@ -56,9 +52,28 @@ resource "aws_iam_policy" "policy" {
 The following arguments are supported:
 
 * `exclude_actions` (Optional) - A list of actions that should not be included in the resulting policy.
-* `actions_for_resources_at_access_level` (Optional) - Provide Information about list of Amazon Resource Names (ARNs) that your role needs access to. actions_for_resources_at_access_level block is documented below.
-* `actions_for_service_without_resource_constraint_support` (Optional) - Provide Information about AWS service actions that do not support resource ARN constraints. actions_for_service_without_resource_constraint_support block is documented below.
+* `actions_for_resources_at_access_level` (Optional) - Provide Information about list of Amazon Resource Names (ARNs) that your role needs access to. `actions_for_resources_at_access_level` block is documented below.
+* `actions_for_service_without_resource_constraint_support` (Optional) - Provide Information about AWS service actions that do not support resource ARN constraints. `actions_for_service_without_resource_constraint_support` block is documented below.
 * `overrides` (Optional) - Provide Information about services to include actions that do not support resource ARN constraints. actions_for_service_without_resource_constraint_support block is documented below.
+
+
+`actions_for_resources_at_access_level` supports the following
+
+* `read` (Optional) - Provide a list of Amazon Resource Names (ARNs) that your role needs READ access to.
+* `write` (Optional) - Provide a list of Amazon Resource Names (ARNs) that your role needs WRITE access to.
+* `tagging` (Optional) - Provide a list of Amazon Resource Names (ARNs) that your role needs TAGGING access to.
+* `list` (Optional) - Provide a list of Amazon Resource Names (ARNs) that your role needs LIST access to.
+* `permissions_management` (Optional) - Provide a list of Amazon Resource Names (ARNs) that your role needs PERMISSIONS MANAGEMENT access to.
+
+
+`actions_for_service_without_resource_constraint_support` supports the following
+
+* `read` (Optional) - Provide a List the service prefix to generate a list of AWS service actions that (1) are at the READ access level and (2) do not support resource constraints.
+* `write` (Optional) - Provide a List the service prefix to generate a list of AWS service actions that (1) are at the WRITE access level and (2) do not support resource constraints.
+* `tagging` (Optional) - Provide a List the service prefix to generate a list of AWS service actions that (1) are at the TAGGING access level and (2) do not support resource constraints.
+* `list` (Optional) - Provide a List the service prefix to generate a list of AWS service actions that (1) are at the LIST access level and (2) do not support resource constraints.
+* `permissions_management` (Optional) - Provide a List the service prefix to generate a list of AWS service actions that (1) are at the PERMISSIONS MANAGEMENT access level and (2) do not support resource constraints.
+* `single-actions` (Optional) - Provide a List of individual actions that do not support resource constraints. For example, s3:ListAllMyBuckets
 
 ## Attributes Reference
 
