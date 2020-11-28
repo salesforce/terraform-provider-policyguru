@@ -14,7 +14,7 @@ This is a data source which can be used to construct a JSON representation of
 an IAM policy document, for use with resources which expect policy documents,
 such as the `aws_iam_policy` resource.
 
--> For more information about building AWS IAM policy documents with Terraform, see the [AWS IAM Policy Document Guide](https://learn.hashicorp.com/terraform/aws/iam-policy).
+-> For more information about building AWS IAM policy with Terraform, see the [AWS IAM Policy Resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy).
 
 ```hcl
 data "policy-sentry_document" "example" {
@@ -79,4 +79,4 @@ The following arguments are supported:
 
 The following attribute is exported:
 
-* `json` - The above arguments serialized as a standard JSON policy document.
+* `json` - policy document in a JSON formatted string.
