@@ -54,7 +54,7 @@ The following arguments are supported:
 * `exclude_actions` (Optional) - A list of actions that should not be included in the resulting policy.
 * `actions_for_resources_at_access_level` (Optional) - Provide Information about list of Amazon Resource Names (ARNs) that your role needs access to. `actions_for_resources_at_access_level` block is documented below.
 * `actions_for_service_without_resource_constraint_support` (Optional) - Provide Information about AWS service actions that do not support resource ARN constraints. `actions_for_service_without_resource_constraint_support` block is documented below.
-* `overrides` (Optional) - Provide Information about services to include actions that do not support resource ARN constraints. actions_for_service_without_resource_constraint_support block is documented below.
+* `overrides` (Optional) - TBD
 
 
 `actions_for_resources_at_access_level` supports the following
