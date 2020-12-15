@@ -1,4 +1,4 @@
-package policy_sentry_rest
+package policyguru_rest
 
 import (
 	"bytes"

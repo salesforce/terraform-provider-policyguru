@@ -1,7 +1,7 @@
-package policy_sentry
+package policyguru
 
 import (
-	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
+	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
@@ -18,7 +18,7 @@ func Provider() *schema.Provider {
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"policy-sentry_document": dataSourcePolicySentryDocument(),
+			"policyguru_document": dataSourcePolicyGuruDocument(),
 		},
 		ResourcesMap:  map[string]*schema.Resource{},
 		ConfigureFunc: configureFunc(),
@@ -32,7 +32,7 @@ func configureFunc() func(*schema.ResourceData) (interface{}, error) {
 		if v, ok := d.GetOk("endpoint"); ok {
 			endpoint = v.(string)
 		}
-		client := policySentryRest.NewClient(endpoint)
+		client := policyGuruRest.NewClient(endpoint)
 		return client, nil
 	}
 }

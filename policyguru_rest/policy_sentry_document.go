@@ -1,4 +1,4 @@
-package policy_sentry_rest
+package policyguru_rest
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 )
 
 const PolicyDocumentPath string = "write"
-const DefaultRestUrl string = "https://rycbfaz4wl.execute-api.us-east-1.amazonaws.com/dev/"
+const DefaultRestUrl string = "https://api.policyguru.io/"
 
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
