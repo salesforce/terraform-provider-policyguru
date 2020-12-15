@@ -1,12 +1,12 @@
 ---
 subcategory: "IAM"
-layout: "policy-sentry"
-page_title: "Policy-Sentry: policy-sentry_document"
+layout: "policyguru"
+page_title: "Policy Guru: policyguru_document"
 description: |-
   Generates an IAM policy document in JSON format
 ---
 
-# Data Source: policy-sentry_document
+# Data Source: policyguru_document
 
 Generates an IAM policy document in JSON format.
 
@@ -17,18 +17,14 @@ such as the `aws_iam_policy` resource.
 -> For more information about building AWS IAM policy with Terraform, see the [AWS IAM Policy Resource](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy).
 
 ```hcl
-data "policy-sentry_document" "example" {
+data "policyguru_document" "example" {
   actions_for_resources_at_access_level {
     write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
     read = list("arn:aws:s3:::mybucket")
-    tagging = list("arn:aws:s3:::mybucket")
-    permissions_management = list("arn:aws:s3:::mybucket")
   }
 
   actions_for_service_without_resource_constraint_support {
-    write = list("s3")
     list = list("s3")
-    read = ["s3"]
     include_single_actions = ["ssm:GetParameter"]
   }
 
@@ -36,14 +32,14 @@ data "policy-sentry_document" "example" {
     skip_resource_constraints_for_actions = []
   }
 
-  exclude_actions = list("s3:GetAccelerateConfiguration", "s3:GetAnalyticsConfiguration")
+  exclude_actions = list("kms:Decrypt*", "kms:Delete*", "kms:Schedule*")
 }
 
 resource "aws_iam_policy" "policy" {
   name        = "sample"
   path        = "/"
-  description = "this uses policy sentry document"
-  policy      = data.policy-sentry_document.example.json
+  description = "this uses policyguru document"
+  policy      = data.policyguru_document.example.json
 }
 ```
 

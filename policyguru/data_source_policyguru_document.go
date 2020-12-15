@@ -1,17 +1,17 @@
-package policy_sentry
+package policyguru
 
 import (
 	"context"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"strconv"
-	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
+	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
 	"time"
 )
 
-func dataSourcePolicySentryDocument() *schema.Resource {
+func dataSourcePolicyGuruDocument() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: dataSourcePolicySentryDocumentRead,
+		ReadContext: dataSourcePolicyGuruDocumentRead,
 
 		Schema: map[string]*schema.Schema{
 			"json": {
@@ -140,14 +140,14 @@ func dataSourcePolicySentryDocument() *schema.Resource {
 	}
 }
 
-func dataSourcePolicySentryDocumentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func dataSourcePolicyGuruDocumentRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	client := m.(*policySentryRest.Client)
+	client := m.(*policyGuruRest.Client)
 
 	// Warning or errors can be collected in a slice type
 	var diags diag.Diagnostics
 
-	policyDocumentInput := new(policySentryRest.PolicyDocumentInput)
+	policyDocumentInput := new(policyGuruRest.PolicyDocumentInput)
 
 	// Read input and set policyDocumentInput
 	if v, ok := d.GetOk("exclude_actions"); ok {

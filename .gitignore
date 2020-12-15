@@ -1,3 +1,15 @@
+# Repository specific
+tmp/
+# The generated binary
+terraform-provider-policyguru
+
+# IDEs
+.idea
+.vscode
+
+# Mac OS X
+.DS_Store
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -45,5 +57,3 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
-
-.idea/

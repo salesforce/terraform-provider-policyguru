@@ -1,4 +1,4 @@
-module terraform-provider-policy-sentry
+module terraform-provider-policyguru
 
 go 1.15
 

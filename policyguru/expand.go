@@ -1,11 +1,11 @@
-package policy_sentry
+package policyguru
 
 import (
 	"fmt"
-	policySentryRest "terraform-provider-policy-sentry/policy_sentry_rest"
+	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
 )
 
-func expandActionForResourcesAtAccessLevel(s []interface{}) (*policySentryRest.ActionsForResourcesAtAccessLevel, error) {
+func expandActionForResourcesAtAccessLevel(s []interface{}) (*policyGuruRest.ActionsForResourcesAtAccessLevel, error) {
 
 	if len(s) == 0 || s[0] == nil {
 		return nil, fmt.Errorf("got empty list")
@@ -13,7 +13,7 @@ func expandActionForResourcesAtAccessLevel(s []interface{}) (*policySentryRest.A
 
 	data := s[0].(map[string]interface{})
 
-	actionForResources := new(policySentryRest.ActionsForResourcesAtAccessLevel)
+	actionForResources := new(policyGuruRest.ActionsForResourcesAtAccessLevel)
 
 	if v, ok := data["read"]; ok {
 		actionForResources.Read = expandStringList(v.([]interface{}))
@@ -35,7 +35,7 @@ func expandActionForResourcesAtAccessLevel(s []interface{}) (*policySentryRest.A
 
 }
 
-func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policySentryRest.ActionsForServicesWithoutResourceConstraints, error) {
+func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policyGuruRest.ActionsForServicesWithoutResourceConstraints, error) {
 
 	if len(s) == 0 || s[0] == nil {
 		return nil, fmt.Errorf("got empty list")
@@ -43,7 +43,7 @@ func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policy
 
 	data := s[0].(map[string]interface{})
 
-	actionForServices := new(policySentryRest.ActionsForServicesWithoutResourceConstraints)
+	actionForServices := new(policyGuruRest.ActionsForServicesWithoutResourceConstraints)
 
 	if v, ok := data["read"]; ok {
 		actionForServices.Read = expandStringList(v.([]interface{}))
@@ -68,14 +68,14 @@ func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policy
 	return actionForServices, nil
 }
 
-func expandOverrides(s []interface{}) (*policySentryRest.Overrides, error) {
+func expandOverrides(s []interface{}) (*policyGuruRest.Overrides, error) {
 
 	if len(s) == 0 || s[0] == nil {
 		return nil, fmt.Errorf("got empty list")
 	}
 
 	data := s[0].(map[string]interface{})
-	overrides := new(policySentryRest.Overrides)
+	overrides := new(policyGuruRest.Overrides)
 	if v, ok := data["skip_resource_constraints_for_actions"]; ok {
 		overrides.SkipResourceConstraints = expandStringList(v.([]interface{}))
 	}

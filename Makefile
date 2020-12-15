@@ -1,5 +1,5 @@
 TEST?=$$(go list ./... | grep -v 'vendor')
-BINARY=terraform-provider-policy-sentry
+BINARY=terraform-provider-policyguru
 
 # go source files, ignore vendor directory
 SRC = $(shell find . -type f -name '*.go' -not -path "./vendor/*")
