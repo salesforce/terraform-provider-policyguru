@@ -2,7 +2,9 @@
 
 This is the Terraform Provider for [Policy Sentry](https://github.com/salesforce/policy_sentry/) - the IAM Least Privilege Policy Generator.
 
-We have Policy Sentry hosted as a REST API and this Terraform provider points to the REST API. Using this Terraform provider, you can write Least Privilege IAM Policies without ever leaving your code editor! 
+We have Policy Sentry hosted as a REST API and this Terraform provider points to the REST API. 
+
+**Using this Terraform provider, you can write Least Privilege IAM Policies without ever leaving your code editor!**
 
 ## Example
 
