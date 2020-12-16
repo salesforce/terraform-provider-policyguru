@@ -10,7 +10,7 @@ We have Policy Sentry hosted as a REST API and this Terraform provider points to
 
 Consider the following example Terraform code:
 
-```hcl-terraform
+```hcl
 terraform {
   required_providers {
     policyguru = {
