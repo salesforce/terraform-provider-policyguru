@@ -14,7 +14,7 @@ We have Policy Sentry hosted as a REST API and this Terraform provider points to
 
 Consider the following example Terraform code:
 
-```hcl-terraform
+```hcl
 terraform {
   required_providers {
     policyguru = {
@@ -45,6 +45,7 @@ data "policyguru_document" "example" {
   }
   exclude_actions = list("kms:Decrypt*", "kms:Delete*", "kms:Disable", "kms:Schedule*")
 }
+
 # This creates an IAM Policy leveraging policyguru
 resource "aws_iam_policy" "policy" {
   name        = "policyguru-example"
