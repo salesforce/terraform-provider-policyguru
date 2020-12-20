@@ -26,6 +26,8 @@ func (c *Client) newRequest(requestBody []byte) (*http.Request, error) {
 		return nil, err
 	}
 
+	req.Header.Set("Content-Type", "application/json")
+
 	return req, nil
 }
 
