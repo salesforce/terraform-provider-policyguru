@@ -9,11 +9,10 @@
 # You will need to pass the `--batch` flag to `gpg` in your signing step
 # in `goreleaser` to indicate this is being used in a non-interactive mode.
 #
-name: release
+name: Publish Release to Terraform
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 jobs:
   goreleaser:
     runs-on: ubuntu-latest

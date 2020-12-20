@@ -137,6 +137,7 @@ Command             |      Description
 ```make fmt```            | Format code
 ```make lint```           | Run golint
 ```make terraform-demo``` | Install and run terraform apply for file under examples folder
+```make clean```          | Clean terraform state files created under examples folder
 
 
 For documentation on using provider, check https://registry.terraform.io/providers/salesforce/policyguru/latest/docs
