@@ -6,6 +6,10 @@ We have Policy Sentry hosted as a REST API and this Terraform provider points to
 
 **Using this Terraform provider, you can write Least Privilege IAM Policies without ever leaving your code editor!**
 
+## Requirements
+
+* This requires Terraform `>= v0.13.0`
+
 ## Example
 
 Consider the following example Terraform code:
@@ -15,7 +19,7 @@ terraform {
   required_providers {
     policyguru = {
       source  = "salesforce/policyguru"
-      version = "1.3.1"
+      version = "2.0.0"
     }
     aws = {
       source  = "hashicorp/aws"
