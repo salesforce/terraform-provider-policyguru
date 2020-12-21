@@ -1,4 +1,4 @@
-package policyguru_rest
+package policygururest
 
 import (
 	"encoding/json"
