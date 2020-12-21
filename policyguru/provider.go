@@ -1,7 +1,7 @@
 package policyguru
 
 import (
-	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
+	policyGuruRest "terraform-provider-policyguru/policygururest"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )

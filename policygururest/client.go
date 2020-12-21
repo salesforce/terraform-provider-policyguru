@@ -1,4 +1,4 @@
-package policyguru_rest
+package policygururest
 
 import (
 	"bytes"
@@ -43,7 +43,6 @@ func (c *Client) doRequest(req *http.Request) ([]byte, error) {
 	}
 	if res.StatusCode == http.StatusOK || res.StatusCode == http.StatusNoContent {
 		return body, err
-	} else {
-		return nil, fmt.Errorf("status: %d, body: %s", res.StatusCode, body)
 	}
+	return nil, fmt.Errorf("status: %d, body: %s", res.StatusCode, body)
 }

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	abc "terraform-provider-policyguru/policyguru_rest"
+	abc "terraform-provider-policyguru/policygururest"
 )
 
 func main() {

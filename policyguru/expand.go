@@ -2,7 +2,7 @@ package policyguru
 
 import (
 	"fmt"
-	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
+	policyGuruRest "terraform-provider-policyguru/policygururest"
 )
 
 func expandActionForResourcesAtAccessLevel(s []interface{}) (*policyGuruRest.ActionsForResourcesAtAccessLevel, error) {

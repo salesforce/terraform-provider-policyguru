@@ -1,4 +1,4 @@
-package policyguru_rest
+package policygururest
 
 type ActionsForResourcesAtAccessLevel struct {
 	Read                  []*string

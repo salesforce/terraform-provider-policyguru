@@ -5,7 +5,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"strconv"
-	policyGuruRest "terraform-provider-policyguru/policyguru_rest"
+	policyGuruRest "terraform-provider-policyguru/policygururest"
 	"time"
 )
 
