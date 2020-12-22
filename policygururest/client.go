@@ -7,12 +7,21 @@ import (
 	"net/http"
 )
 
+// Client is httpclient for making API request
 type Client struct {
 	HttpClient *http.Client
 	Endpoint   string
 }
 
+const policyDocumentPath string = "write"
+const defaultRestUrl string = "https://api.policyguru.io/"
+
+// NewClient creates new Client
 func NewClient(endpoint string) *Client {
+
+    if len(endpoint) == 0 {
+		endpoint = defaultRestUrl + policyDocumentPath
+	}
 	return &Client{
 		HttpClient: http.DefaultClient,
 		Endpoint:   endpoint,
