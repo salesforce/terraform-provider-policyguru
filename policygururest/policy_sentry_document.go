@@ -5,7 +5,6 @@ import (
 	"fmt"
 )
 
-
 // GetPolicyDocument returns policy document by calling the REST API
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
