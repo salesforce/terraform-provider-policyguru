@@ -8,7 +8,7 @@ import (
 const policyDocumentPath string = "write"
 const defaultRestUrl string = "https://api.policyguru.io/"
 
-// get policy document
+// GetPolicyDocument returns policy document by calling the REST API
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
 	var policyDocument PolicyDocument
 
@@ -93,7 +93,7 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	return &policyDocument, nil
 }
 
-// get json form of policy document
+// GetPolicyDocumentJsonString returns json form of policy document
 func (c *Client) GetPolicyDocumentJsonString(input *PolicyDocumentInput) (string, error) {
 	policyDocument, err := c.GetPolicyDocument(input)
 
