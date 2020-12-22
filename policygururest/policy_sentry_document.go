@@ -5,8 +5,6 @@ import (
 	"fmt"
 )
 
-const policyDocumentPath string = "write"
-const defaultRestUrl string = "https://api.policyguru.io/"
 
 // GetPolicyDocument returns policy document by calling the REST API
 func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument, error) {
@@ -69,10 +67,6 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 
 	if err != nil {
 		return nil, err
-	}
-
-	if len(c.Endpoint) == 0 {
-		c.Endpoint = defaultRestUrl + policyDocumentPath
 	}
 
 	req, err := c.newRequest(requestBody)
