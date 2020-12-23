@@ -37,9 +37,11 @@ jobs:
         make lint
 
     - name: Go Format
+      env:
+        SRC: $(shell find . -type f -name '*.go' -not -path "./vendor/*")
       uses: Jerome1337/gofmt-action@v1.0.4
       with:
-        gofmt-path: $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+        gofmt-path: $(SRC)
         gofmt-flags: '-l -d'
 
   ci-validate-go-modules:

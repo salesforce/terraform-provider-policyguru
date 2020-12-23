@@ -49,6 +49,7 @@ func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policy
 		actionForServices.Read = expandStringList(v.([]interface{}))
 	}
 	if v, ok := data["write"]; ok {
+
 		actionForServices.Write = expandStringList(v.([]interface{}))
 	}
 	if v, ok := data["tagging"]; ok {

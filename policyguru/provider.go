@@ -20,6 +20,7 @@ func Provider() *schema.Provider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"policyguru_document": dataSourcePolicyGuruDocument(),
 		},
+
 		ResourcesMap:  map[string]*schema.Resource{},
 		ConfigureFunc: configureFunc(),
 	}
