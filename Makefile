@@ -20,6 +20,7 @@ check-fmt:
 	if [ -n "$GOFMT_OUTPUT" ]; then \
 		echo "All the following files are not correctly formatted"; \
 		echo "${GOFMT_OUTPUT}"; \
+		echo "use `make fmt` to format files; \
 		exit 1; \
 	fi
 

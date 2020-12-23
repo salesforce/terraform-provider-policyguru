@@ -33,20 +33,6 @@ func expandActionForResourcesAtAccessLevel(s []interface{}) (*policyGuruRest.Act
 
 	return actionForResources, nil
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 func expandActionForServicesWithoutResourceConstraints(s []interface{}) (*policyGuruRest.ActionsForServicesWithoutResourceConstraints, error) {
