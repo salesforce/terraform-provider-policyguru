@@ -31,14 +31,16 @@ jobs:
         go get -v -t -d ./...
         make build
 
-    - name: Lint
+    - name: Go Lint
       run: |
         curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.30.0
         make lint
 
-    - name: Format
-      run: |
-        make fmt
+    - name: Go Format
+      uses: Jerome1337/gofmt-action@v1.0.4
+      with:
+        gofmt-path: $(shell find . -type f -name '*.go' -not -path "./vendor/*")
+        gofmt-flags: '-l -d'
 
   ci-validate-go-modules:
     name: ci-validate-go-modules
