@@ -13,7 +13,7 @@ install: build
 	mv ${BINARY} ~/.terraform.d/plugins
 
 fmt:
-	@gofmt -l -w $(SRC)
+	gofmt -l -w $(SRC)
 
 lint:
 	golangci-lint run
