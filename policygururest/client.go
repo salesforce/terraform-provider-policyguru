@@ -19,7 +19,7 @@ const defaultRestUrl string = "https://api.policyguru.io/"
 // NewClient creates new Client
 func NewClient(endpoint string) *Client {
 
-    if len(endpoint) == 0 {
+	if len(endpoint) == 0 {
 		endpoint = defaultRestUrl + policyDocumentPath
 	}
 	return &Client{

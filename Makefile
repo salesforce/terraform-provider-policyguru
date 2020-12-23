@@ -13,7 +13,16 @@ install: build
 	mv ${BINARY} ~/.terraform.d/plugins
 
 fmt:
-	@gofmt -l -w $(SRC)
+	gofmt -l -w $(SRC)
+
+check-fmt:
+	GOFMT_OUTPUT=$(gofmt -l $(SRC) 2>&1)
+	if [ -n "$GOFMT_OUTPUT" ]; then \
+		echo "All the following files are not correctly formatted"; \
+		echo "${GOFMT_OUTPUT}"; \
+		echo "use `make fmt` to format files; \
+		exit 1; \
+	fi
 
 lint:
 	golangci-lint run
