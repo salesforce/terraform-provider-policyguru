@@ -16,10 +16,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-provider "policyguru" {
-  endpoint = "https://api.policyguru.io/write"
-}
-
 data "policyguru_document" "example" {
   actions_for_resources_at_access_level {
     write = list("arn:aws:kms:us-east-1:123456789012:key/aaaa-bbbb-cccc")
