@@ -19,7 +19,7 @@ terraform {
   required_providers {
     policyguru = {
       source  = "salesforce/policyguru"
-      version = "2.0.0"
+      version = "2.0.4"
     }
     aws = {
       source  = "hashicorp/aws"
