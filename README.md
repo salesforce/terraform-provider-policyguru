@@ -2,7 +2,7 @@
 
 # terraform-provider-policyguru
 
-![continuous-integration](https://github.com/salesforce/terraform-provider-policyguru/workflows/continuous-integration/badge.svg)
+[![continuous-integration](https://github.com/salesforce/terraform-provider-policyguru/workflows/continuous-integration/badge.svg)](https://github.com/salesforce/terraform-provider-policyguru/actions?query=workflow%3Acontinuous-integration)
 [![Go Report Card](https://goreportcard.com/badge/github.com/salesforce/terraform-provider-policyguru)](https://goreportcard.com/report/github.com/salesforce/terraform-provider-policyguru)
 
 This is the Terraform Provider for [Policy Sentry](https://github.com/salesforce/policy_sentry/) - the IAM Least Privilege Policy Generator.
