@@ -12,7 +12,7 @@ func (c *Client) GetPolicyDocument(input *PolicyDocumentInput) (*PolicyDocument,
 	var inputBody map[string]interface{} = make(map[string]interface{})
 	var inputBodyActionsForServices map[string]interface{} = make(map[string]interface{})
 
-    // TODO: get the name from user input
+	// TODO: get the name from user input
 	inputBody["name"] = "change-me"
 
 	if input.ActionsForServices != nil {
