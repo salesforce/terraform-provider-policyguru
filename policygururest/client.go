@@ -13,7 +13,7 @@ type Client struct {
 	Endpoint   string
 }
 
-const policyDocumentPath string = "write"
+const policyDocumentPath string = "write-iam-policy"
 const defaultRestUrl string = "https://api.policyguru.io/"
 
 // NewClient creates new Client
