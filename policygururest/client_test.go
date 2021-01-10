@@ -2,13 +2,13 @@ package policygururest
 
 import "testing"
 
-type ClientInput struct {
+type clientInput struct {
 	endpoint string
 	expected string
 }
 
 func TestNewClient(t *testing.T) {
-	testDataItems := []ClientInput{
+	testDataItems := []clientInput{
 		{endpoint: "http:/api.policyguru/write", expected: "http:/api.policyguru/write"},
 		{endpoint: "", expected: "https://api.policyguru.io/write-iam-policy"},
 	}
