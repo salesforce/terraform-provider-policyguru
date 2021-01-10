@@ -5,11 +5,6 @@ import (
 	"testing"
 )
 
-type ClientInput struct {
-	endpoint string
-	expected string
-}
-
 func assertNotNil(t *testing.T, a interface{}) {
 	if a == nil {
 		t.Errorf("var a %v is nil", a)
