@@ -1,9 +1,9 @@
 package policyguru
 
 import (
-    "testing"
-    "fmt"
-    )
+	"fmt"
+	"testing"
+)
 
 type ClientInput struct {
 	endpoint string
@@ -11,36 +11,36 @@ type ClientInput struct {
 }
 
 func assertNotNil(t *testing.T, a interface{}) {
-    if a == nil {
-        t.Errorf("var a %v is nil", a)
-    }
+	if a == nil {
+		t.Errorf("var a %v is nil", a)
+	}
 }
 
 func TestExpandActionForResourcesAtAccessLevel(t *testing.T) {
 
-    inputMap := make(map[string]interface{})
+	inputMap := make(map[string]interface{})
 
-    var data []interface{}
-    data = append(data, "s3")
-    inputMap["read"] = data
-    inputMap["write"] = data
-    inputMap["tagging"] = data
-    inputMap["permissions_management"] = data
-    inputMap["list"] = data
+	var data []interface{}
+	data = append(data, "s3")
+	inputMap["read"] = data
+	inputMap["write"] = data
+	inputMap["tagging"] = data
+	inputMap["permissions_management"] = data
+	inputMap["list"] = data
 
-    input := make([]interface{}, 0, 1)
-    input = append(input, inputMap)
+	input := make([]interface{}, 0, 1)
+	input = append(input, inputMap)
 
-    fmt.Println(input)
+	fmt.Println(input)
 
-    actionForResources, err := expandActionForResourcesAtAccessLevel(input)
-    if err != nil {
-        t.Fatal(err)
-    }
-    assertNotNil(t, actionForResources.Read)
-    assertNotNil(t, actionForResources.Write)
-    assertNotNil(t, actionForResources.List)
-    assertNotNil(t, actionForResources.Tagging)
-    assertNotNil(t, actionForResources.PermissionsManagement)
+	actionForResources, err := expandActionForResourcesAtAccessLevel(input)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assertNotNil(t, actionForResources.Read)
+	assertNotNil(t, actionForResources.Write)
+	assertNotNil(t, actionForResources.List)
+	assertNotNil(t, actionForResources.Tagging)
+	assertNotNil(t, actionForResources.PermissionsManagement)
 
 }
