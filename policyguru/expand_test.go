@@ -66,7 +66,7 @@ func TestExpandActionForServicesWithoutResourceConstraints(t *testing.T) {
 
 func TestExpandOverrides(t *testing.T) {
 
-    inputMap := make(map[string]interface{})
+	inputMap := make(map[string]interface{})
 
 	var data []interface{}
 	data = append(data, "s3")
@@ -75,7 +75,7 @@ func TestExpandOverrides(t *testing.T) {
 	input := make([]interface{}, 0, 1)
 	input = append(input, inputMap)
 
-	overrides , err := expandOverrides(input)
+	overrides, err := expandOverrides(input)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -84,7 +84,7 @@ func TestExpandOverrides(t *testing.T) {
 
 func TestExpandStringList(t *testing.T) {
 
-    input := make([]interface{}, 0, 1)
+	input := make([]interface{}, 0, 1)
 	input = append(input, "abc")
 	result := expandStringList(input)
 
