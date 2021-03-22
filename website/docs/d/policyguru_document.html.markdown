@@ -50,7 +50,7 @@ The following arguments are supported:
 * `exclude_actions` (Optional) - A list of actions that should not be included in the resulting policy.
 * `actions_for_resources_at_access_level` (Optional) - Provide Information about list of Amazon Resource Names (ARNs) that your role needs access to. `actions_for_resources_at_access_level` block is documented below.
 * `actions_for_service_without_resource_constraint_support` (Optional) - Provide Information about AWS service actions that do not support resource ARN constraints. `actions_for_service_without_resource_constraint_support` block is documented below.
-* `overrides` (Optional) - TBD
+* `overrides` (Optional) - handle exceptions/overrides for policies. `overrides` block is documented below.
 
 
 `actions_for_resources_at_access_level` supports the following
@@ -68,8 +68,13 @@ The following arguments are supported:
 * `write` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `WRITE` access level and (2) do not support resource constraints.
 * `tagging` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `TAGGING` access level and (2) do not support resource constraints.
 * `list` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `LIST` access level and (2) do not support resource constraints.
-* `permissions_management` (Optional) - Provide a List pf service prefix to generate a list of AWS service actions that (1) are at the `PERMISSIONS MANAGEMENT` access level and (2) do not support resource constraints.
+* `permissions_management` (Optional) - Provide a List of service prefix to generate a list of AWS service actions that (1) are at the `PERMISSIONS MANAGEMENT` access level and (2) do not support resource constraints.
 * `include_single_actions` (Optional) - Provide a List of individual actions that do not support resource constraints. For example, s3:ListAllMyBuckets
+
+
+`overrides` supports the following
+
+* `skip_resource_constraints_for_actions` (Optional) - Provide a list of Actions that do not support resource constraints. For more details on how skip_resource_constraints_for_actions works - https://policy-sentry.readthedocs.io/en/latest/writing-policies/skipping-resource-constraints/
 
 ## Attributes Reference
 
