@@ -39,12 +39,14 @@ testacc:
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
 validate-modules:
+	@echo "- Clean go modcache"
+	go clean -modcache
 	@echo "- Verifying that the dependencies have expected content..."
 	go mod verify
 	@echo "- Checking for any unused/missing packages in go.mod..."
 	go mod tidy
 	@echo "- Checking for unused packages in vendor..."
-	go mod vendor
+	go mod vendor -v
 	@git diff --exit-code -- go.sum go.mod vendor/
 
 terraform-demo: install
