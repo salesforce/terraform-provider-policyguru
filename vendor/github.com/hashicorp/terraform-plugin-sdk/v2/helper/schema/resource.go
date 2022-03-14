@@ -10,6 +10,7 @@ import (
 	"github.com/hashicorp/go-cty/cty"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/internal/logging"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
 )
 
@@ -100,8 +101,11 @@ type Resource struct {
 	// Deprecated: Please use the context aware equivalents instead. Only one of
 	// the operations or context aware equivalent can be set, not both.
 	Create CreateFunc
-	Read   ReadFunc
+	// Deprecated: Please use the context aware equivalents instead.
+	Read ReadFunc
+	// Deprecated: Please use the context aware equivalents instead.
 	Update UpdateFunc
+	// Deprecated: Please use the context aware equivalents instead.
 	Delete DeleteFunc
 
 	// Exists is a function that is called to check if a resource still
@@ -141,6 +145,46 @@ type Resource struct {
 	ReadContext   ReadContextFunc
 	UpdateContext UpdateContextFunc
 	DeleteContext DeleteContextFunc
+
+	// CreateWithoutTimeout is equivalent to CreateContext with no context timeout.
+	//
+	// Most resources should prefer CreateContext with properly implemented
+	// operation timeout values, however there are cases where operation
+	// synchronization across concurrent resources is necessary in the resource
+	// logic, such as a mutex, to prevent remote system errors. Since these
+	// operations would have an indeterminate timeout that scales with the
+	// number of resources, this allows resources to control timeout behavior.
+	CreateWithoutTimeout CreateContextFunc
+
+	// ReadWithoutTimeout is equivalent to ReadContext with no context timeout.
+	//
+	// Most resources should prefer ReadContext with properly implemented
+	// operation timeout values, however there are cases where operation
+	// synchronization across concurrent resources is necessary in the resource
+	// logic, such as a mutex, to prevent remote system errors. Since these
+	// operations would have an indeterminate timeout that scales with the
+	// number of resources, this allows resources to control timeout behavior.
+	ReadWithoutTimeout ReadContextFunc
+
+	// UpdateWithoutTimeout is equivalent to UpdateContext with no context timeout.
+	//
+	// Most resources should prefer UpdateContext with properly implemented
+	// operation timeout values, however there are cases where operation
+	// synchronization across concurrent resources is necessary in the resource
+	// logic, such as a mutex, to prevent remote system errors. Since these
+	// operations would have an indeterminate timeout that scales with the
+	// number of resources, this allows resources to control timeout behavior.
+	UpdateWithoutTimeout UpdateContextFunc
+
+	// DeleteWithoutTimeout is equivalent to DeleteContext with no context timeout.
+	//
+	// Most resources should prefer DeleteContext with properly implemented
+	// operation timeout values, however there are cases where operation
+	// synchronization across concurrent resources is necessary in the resource
+	// logic, such as a mutex, to prevent remote system errors. Since these
+	// operations would have an indeterminate timeout that scales with the
+	// number of resources, this allows resources to control timeout behavior.
+	DeleteWithoutTimeout DeleteContextFunc
 
 	// CustomizeDiff is a custom function for working with the diff that
 	// Terraform has created for this resource - it can be used to customize the
@@ -228,9 +272,17 @@ func (r *Resource) ShimInstanceStateFromValue(state cty.Value) (*terraform.Insta
 //
 // Deprecated: Please use the context aware equivalents instead.
 type CreateFunc func(*ResourceData, interface{}) error
+
+// Deprecated: Please use the context aware equivalents instead.
 type ReadFunc func(*ResourceData, interface{}) error
+
+// Deprecated: Please use the context aware equivalents instead.
 type UpdateFunc func(*ResourceData, interface{}) error
+
+// Deprecated: Please use the context aware equivalents instead.
 type DeleteFunc func(*ResourceData, interface{}) error
+
+// Deprecated: Please use the context aware equivalents instead.
 type ExistsFunc func(*ResourceData, interface{}) (bool, error)
 
 // See Resource documentation.
@@ -280,6 +332,11 @@ func (r *Resource) create(ctx context.Context, d *ResourceData, meta interface{}
 		}
 		return nil
 	}
+
+	if r.CreateWithoutTimeout != nil {
+		return r.CreateWithoutTimeout(ctx, d, meta)
+	}
+
 	ctx, cancel := context.WithTimeout(ctx, d.Timeout(TimeoutCreate))
 	defer cancel()
 	return r.CreateContext(ctx, d, meta)
@@ -292,6 +349,11 @@ func (r *Resource) read(ctx context.Context, d *ResourceData, meta interface{}) 
 		}
 		return nil
 	}
+
+	if r.ReadWithoutTimeout != nil {
+		return r.ReadWithoutTimeout(ctx, d, meta)
+	}
+
 	ctx, cancel := context.WithTimeout(ctx, d.Timeout(TimeoutRead))
 	defer cancel()
 	return r.ReadContext(ctx, d, meta)
@@ -304,6 +366,11 @@ func (r *Resource) update(ctx context.Context, d *ResourceData, meta interface{}
 		}
 		return nil
 	}
+
+	if r.UpdateWithoutTimeout != nil {
+		return r.UpdateWithoutTimeout(ctx, d, meta)
+	}
+
 	ctx, cancel := context.WithTimeout(ctx, d.Timeout(TimeoutUpdate))
 	defer cancel()
 	return r.UpdateContext(ctx, d, meta)
@@ -316,6 +383,11 @@ func (r *Resource) delete(ctx context.Context, d *ResourceData, meta interface{}
 		}
 		return nil
 	}
+
+	if r.DeleteWithoutTimeout != nil {
+		return r.DeleteWithoutTimeout(ctx, d, meta)
+	}
+
 	ctx, cancel := context.WithTimeout(ctx, d.Timeout(TimeoutDelete))
 	defer cancel()
 	return r.DeleteContext(ctx, d, meta)
@@ -365,7 +437,10 @@ func (r *Resource) Apply(
 	if d.Destroy || d.RequiresNew() {
 		if s.ID != "" {
 			// Destroy the resource since it is created
+			logging.HelperSchemaTrace(ctx, "Calling downstream")
 			diags = append(diags, r.delete(ctx, data, meta)...)
+			logging.HelperSchemaTrace(ctx, "Called downstream")
+
 			if diags.HasError() {
 				return r.recordCurrentSchemaVersion(data.State()), diags
 			}
@@ -393,7 +468,9 @@ func (r *Resource) Apply(
 	if data.Id() == "" {
 		// We're creating, it is a new resource.
 		data.MarkNewResource()
+		logging.HelperSchemaTrace(ctx, "Calling downstream")
 		diags = append(diags, r.create(ctx, data, meta)...)
+		logging.HelperSchemaTrace(ctx, "Called downstream")
 	} else {
 		if !r.updateFuncSet() {
 			return s, append(diags, diag.Diagnostic{
@@ -401,7 +478,9 @@ func (r *Resource) Apply(
 				Summary:  "doesn't support update",
 			})
 		}
+		logging.HelperSchemaTrace(ctx, "Calling downstream")
 		diags = append(diags, r.update(ctx, data, meta)...)
+		logging.HelperSchemaTrace(ctx, "Called downstream")
 	}
 
 	return r.recordCurrentSchemaVersion(data.State()), diags
@@ -495,7 +574,10 @@ func (r *Resource) ReadDataApply(
 		return nil, diag.FromErr(err)
 	}
 
+	logging.HelperSchemaTrace(ctx, "Calling downstream")
 	diags := r.read(ctx, data, meta)
+	logging.HelperSchemaTrace(ctx, "Called downstream")
+
 	state := data.State()
 	if state != nil && state.ID == "" {
 		// Data sources can set an ID if they want, but they aren't
@@ -541,7 +623,10 @@ func (r *Resource) RefreshWithoutUpgrade(
 			data.providerMeta = s.ProviderMeta
 		}
 
+		logging.HelperSchemaTrace(ctx, "Calling downstream")
 		exists, err := r.Exists(data, meta)
+		logging.HelperSchemaTrace(ctx, "Called downstream")
+
 		if err != nil {
 			return s, diag.FromErr(err)
 		}
@@ -561,29 +646,33 @@ func (r *Resource) RefreshWithoutUpgrade(
 		data.providerMeta = s.ProviderMeta
 	}
 
+	logging.HelperSchemaTrace(ctx, "Calling downstream")
 	diags := r.read(ctx, data, meta)
+	logging.HelperSchemaTrace(ctx, "Called downstream")
+
 	state := data.State()
 	if state != nil && state.ID == "" {
 		state = nil
 	}
 
+	schemaMap(r.Schema).handleDiffSuppressOnRefresh(ctx, s, state)
 	return r.recordCurrentSchemaVersion(state), diags
 }
 
 func (r *Resource) createFuncSet() bool {
-	return (r.Create != nil || r.CreateContext != nil)
+	return (r.Create != nil || r.CreateContext != nil || r.CreateWithoutTimeout != nil)
 }
 
 func (r *Resource) readFuncSet() bool {
-	return (r.Read != nil || r.ReadContext != nil)
+	return (r.Read != nil || r.ReadContext != nil || r.ReadWithoutTimeout != nil)
 }
 
 func (r *Resource) updateFuncSet() bool {
-	return (r.Update != nil || r.UpdateContext != nil)
+	return (r.Update != nil || r.UpdateContext != nil || r.UpdateWithoutTimeout != nil)
 }
 
 func (r *Resource) deleteFuncSet() bool {
-	return (r.Delete != nil || r.DeleteContext != nil)
+	return (r.Delete != nil || r.DeleteContext != nil || r.DeleteWithoutTimeout != nil)
 }
 
 // InternalValidate should be called to validate the structure
@@ -666,8 +755,8 @@ func (r *Resource) InternalValidate(topSchemaMap schemaMap, writable bool) error
 			}
 		}
 
-		for k, f := range tsm {
-			if isReservedResourceFieldName(k, f) {
+		for k := range tsm {
+			if isReservedResourceFieldName(k) {
 				return fmt.Errorf("%s is a reserved field name", k)
 			}
 		}
@@ -722,6 +811,34 @@ func (r *Resource) InternalValidate(topSchemaMap schemaMap, writable bool) error
 		return fmt.Errorf("DeleteContext and Delete should not both be set")
 	}
 
+	// check context funcs are not set alongside their without timeout counterparts
+	if r.CreateContext != nil && r.CreateWithoutTimeout != nil {
+		return fmt.Errorf("CreateContext and CreateWithoutTimeout should not both be set")
+	}
+	if r.ReadContext != nil && r.ReadWithoutTimeout != nil {
+		return fmt.Errorf("ReadContext and ReadWithoutTimeout should not both be set")
+	}
+	if r.UpdateContext != nil && r.UpdateWithoutTimeout != nil {
+		return fmt.Errorf("UpdateContext and UpdateWithoutTimeout should not both be set")
+	}
+	if r.DeleteContext != nil && r.DeleteWithoutTimeout != nil {
+		return fmt.Errorf("DeleteContext and DeleteWithoutTimeout should not both be set")
+	}
+
+	// check non-context funcs are not set alongside the context without timeout counterparts
+	if r.Create != nil && r.CreateWithoutTimeout != nil {
+		return fmt.Errorf("Create and CreateWithoutTimeout should not both be set")
+	}
+	if r.Read != nil && r.ReadWithoutTimeout != nil {
+		return fmt.Errorf("Read and ReadWithoutTimeout should not both be set")
+	}
+	if r.Update != nil && r.UpdateWithoutTimeout != nil {
+		return fmt.Errorf("Update and UpdateWithoutTimeout should not both be set")
+	}
+	if r.Delete != nil && r.DeleteWithoutTimeout != nil {
+		return fmt.Errorf("Delete and DeleteWithoutTimeout should not both be set")
+	}
+
 	return schemaMap(r.Schema).InternalValidate(tsm)
 }
 
@@ -745,13 +862,13 @@ func validateResourceID(s *Schema) error {
 
 	// ID should at least be computed. If unspecified it will be set to Computed and Optional,
 	// but Optional is unnecessary if undesired.
-	if s.Computed != true {
+	if !s.Computed {
 		return fmt.Errorf(`the "id" attribute must be marked Computed`)
 	}
 	return nil
 }
 
-func isReservedResourceFieldName(name string, s *Schema) bool {
+func isReservedResourceFieldName(name string) bool {
 	for _, reservedName := range ReservedResourceFields {
 		if name == reservedName {
 			return true
